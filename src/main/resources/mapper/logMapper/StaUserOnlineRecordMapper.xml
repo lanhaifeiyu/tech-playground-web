@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zom.statistics.dao.mapper.logMapper.StaUserOnlineRecordMapper">
+
+	<!-- @author yuronghua-airson @template 2019.08.02 v11.0 @organization Zero One More, Inc. http://www.01more.com @time 2020-02-27 09:57:44 -->
+
+	<!--====================================== 设置开始-CONFIG_BEGIN ======================================-->
+	<sql id="table">sta_user_online_record</sql>
+	<!-- 所有基础字段 -->
+	<sql id="baseColumns">A.id AS id,A.corpid AS corpid,A.uid AS uid,A.name AS name,A.time_ym AS timeYm,A.time_ymd AS timeYmd,A.time_ymdh AS timeYmdh,A.dept_unique_id AS deptUniqueId,A.dept_name AS deptName,A.logon_time AS logonTime,A.logoff_time AS logoffTime,A.last_time AS lastTime,A.online_duration AS onlineDuration,A.is_onduty AS isOnduty,A.session AS session,A.end_flag AS endFlag,A.state AS state,A.`real` AS `real`</sql>
+	<!-- 分组  -->
+	<sql id="groupBy">
+		<if test="groupBy != null and groupBy !='' "> GROUP BY ${groupBy,jdbcType=VARCHAR} </if>
+	</sql>
+	<!-- 排序  -->
+	<sql id="orderBy">
+		<if test="orderBy != null and orderBy !='' ">
+			<if test="selfOrder == null">ORDER BY A.${orderBy}</if>
+			<if test="selfOrder != null">ORDER BY ${orderBy}</if>
+		</if>
+		<if test="ascOrDesc != null and ascOrDesc !='' and selfOrder == null "> ${ascOrDesc}</if>
+		<if test="orderBy == null and ascOrDesc == null "> ORDER BY A.id DESC</if>
+	</sql>
+	<!-- 分页 -->
+	<sql id="limitCount">
+		<if test="count != null and count !='' "> LIMIT ${start},${count}</if>
+	</sql>
+	<!--====================================== 设置结束-CONFIG_FINISH ======================================-->
+
+
+	<!--=@@@@@@============================= 自定义内容 开始 _@CAUTION_SELF_BEGIN@_ =============================@@@@@@=-->
+	<sql id="joinColumns"></sql>
+	<sql id="baseSearch"></sql>
+	<sql id="joinSearch"></sql>
+	<sql id="leftJoin"></sql>
+
+	<!-- 结束标识：1已结束，3已开始，4已结束需更新,只查出开始时间超过5分钟的数据，这5分钟是尽量让业务自然结束 -->
+	<select id="selectOngoingList" resultType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.end_flag >= 3
+	</select>
+
+	<select id="selectOngoingListFresh" resultType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.end_flag >= 3 AND A.logon_time &lt; DATE_SUB(NOW(), INTERVAL 5 MINUTE)
+	</select>
+
+	<select id="selectListToSum" resultType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id > #{lastPkId} ORDER BY A.id ASC LIMIT #{count}
+	</select>
+
+	<update id="updateStateEnd" parameterType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		UPDATE <include refid="table"/> SET end_flag = 1, logoff_time = #{logoffTime,jdbcType=TIMESTAMP}, online_duration = #{onlineDuration} WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateFresh" parameterType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		UPDATE <include refid="table"/> SET last_time = #{lastTime,jdbcType=TIMESTAMP}<if test="endFlag != null">,end_flag = #{endFlag}</if><if test="logoffTime != null">,logoff_time = #{logoffTime,jdbcType=TIMESTAMP}</if><if test="onlineDuration > 0">,online_duration = #{onlineDuration}</if> WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<!-- old below -->
+
+	<select id="selectOnlineTimeByUidAndDate" resultType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		select id, corpid, uid, name, time_ymd, logon_time, logoff_time, online_duration, end_flag, state, `real` from sta_user_online_record where uid in (${uid}) and time_ymd = #{date} order by id desc
+	</select>
+
+	<select id="selectByDate" resultType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		select id, corpid, uid, name, time_ymd, logon_time, logoff_time, online_duration, end_flag, state, `real` from sta_user_online_record
+		<where>
+			<if test="date != null and date != ''">
+				time_ymd = #{date}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByLastId" resultType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		select id, corpid, uid, name, time_ym, time_ymd, time_ymdh, dept_unique_id, dept_name, logon_time, logoff_time, last_time, online_duration, is_onduty, `session`, end_flag, state, `real` from sta_user_online_record where id > #{id} limit 2000
+	</select>
+
+	<select id="select" resultType="com.zom.statistics.dao.po.StaUserOnlineRecord" parameterType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		select id, corpid, uid, name, time_ym, time_ymd, time_ymdh, dept_unique_id, dept_name, logon_time, logoff_time, last_time, online_duration, is_onduty, end_flag, `session`, state, `real` from sta_user_online_record
+		<where>
+			<if test="id != null and id != ''">
+				id = #{id}
+			</if>
+			<if test="corpid != null and corpid != ''">
+				and corpid = #{corpid}
+			</if>
+			<if test="uid != null and uid != ''">
+				and uid = #{uid}
+			</if>
+			<if test="timeYm != null and timeYm != ''">
+				and time_ym = #{timeYm}
+			</if>
+			<if test="timeYmd != null and timeYmd != ''">
+				and time_ymd = #{timeYmd}
+			</if>
+			<if test="deptUniqueId != null and deptUniqueId != ''">
+				and dept_unique_id = #{corpid}
+			</if>
+			<if test="endFlag != null and endFlag != ''">
+				and end_flag = #{endFlag}
+			</if>
+			<if test="state != null and state != ''">
+				and state = #{state}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByEndFlagAndLastId" resultType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		select id, corpid, uid, name, time_ym, time_ymd, time_ymdh, dept_unique_id, dept_name, logon_time, logoff_time, online_duration, is_onduty, end_flag, `session`, last_time, state, `real` from sta_user_online_record
+		<where>
+			<if test="endFlag != null and endFlag != ''">
+				end_flag = #{endFlag}
+			</if>
+			<if test="lastId != null and lastId != '' or lastId == 0">
+				and id > #{lastId}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByEndFlagAndLastIdLimit" resultType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		select id, corpid, uid, name, time_ym, time_ymd, time_ymdh, dept_unique_id, dept_name, logon_time, logoff_time, online_duration, is_onduty, end_flag, `session`, last_time, state, `real` from sta_user_online_record
+		<where>
+			<if test="endFlag != null and endFlag != ''">
+				end_flag = #{endFlag}
+			</if>
+			<if test="lastId != null and lastId != '' or lastId == 0">
+				and id > #{lastId}
+			</if>
+		</where>
+		limit 2000
+	</select>
+
+	<select id="selectOngoing" resultType="com.zom.statistics.DTO.ContinueBusiness">
+		select corpid corp_id, uid, time_ymd, dept_unique_id unique_id, logon_time start_time from sta_user_online_record
+		<where>
+			<if test="uid != null and uid != ''">
+				uid = #{uid}
+			</if>
+			<if test="uniqueIds != null and uniqueIds.size() > 0">
+				and dept_unique_id in
+				<foreach collection="uniqueIds" item="uniqueId" open="(" separator="," close=")">
+					#{uniqueId}
+				</foreach>
+			</if>
+			<if test="true">
+				and end_flag = 3 and `real` = 0
+			</if>
+		</where>
+	</select>
+
+	<update id="updateEndFlagById" parameterType="string">
+		update sta_user_online_record set end_flag = 1 where id in (${ids})
+	</update>
+
+	<insert id="insertList">
+		insert into sta_user_online_record (corpid, uid, `name`, time_ym, time_ymd, time_ymdh, dept_unique_id, dept_name, logon_time, logoff_time, online_duration, is_onduty, end_flag, session, state, `real`) values
+		<foreach collection="list" item="c" separator=",">
+			(#{c.corpid}, #{c.uid}, #{c.name}, #{c.timeYm}, #{c.timeYmd}, #{c.timeYmdh}, #{c.deptUniqueId}, #{c.deptName}, #{c.logonTime}, #{c.logoffTime}, #{c.onlineDuration}, #{c.isOnduty}, #{c.endFlag}, #{c.session}, #{c.state}, #{c.real})
+		</foreach>
+	</insert>
+	<!--=@@@@@@============================= 自定义内容 结束 _@CAUTION_SELF_FINISH@_ =============================@@@@@@=-->
+
+
+	<!--====================================== 查询开始-SELECT_BEGIN ======================================-->
+	<select id="load" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> LIMIT 0,1
+	</select>
+
+	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> <include refid="limitCount"/>
+	</select>
+
+	<select id="selectCountByCondition" parameterType="java.util.Map" resultType="long">
+		SELECT COUNT(*) FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where>
+	</select>
+	<!--====================================== 查询结束-SELECT_FINISH ======================================-->
+
+	<!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
+	<!-- <-#-if cMap_has_next>,</-#-if> -->
+	<update id="updateByPrimaryKey" parameterType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		UPDATE <include refid="table"/>
+		<set>corpid = #{corpid,jdbcType=INTEGER},uid = #{uid,jdbcType=BIGINT},name = #{name,jdbcType=VARCHAR},time_ym = #{timeYm,jdbcType=INTEGER},time_ymd = #{timeYmd,jdbcType=INTEGER},time_ymdh = #{timeYmdh,jdbcType=INTEGER},dept_unique_id = #{deptUniqueId,jdbcType=VARCHAR},dept_name = #{deptName,jdbcType=VARCHAR},logon_time = #{logonTime,jdbcType=TIMESTAMP},logoff_time = #{logoffTime,jdbcType=TIMESTAMP},last_time = #{lastTime,jdbcType=TIMESTAMP},online_duration = #{onlineDuration,jdbcType=BIGINT},is_onduty = #{isOnduty,jdbcType=INTEGER},session = #{session,jdbcType=VARCHAR},end_flag = #{endFlag,jdbcType=INTEGER},state = #{state,jdbcType=INTEGER},`real` = #{real,jdbcType=INTEGER},</set>
+		WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.zom.statistics.dao.po.StaUserOnlineRecord">
+		UPDATE <include refid="table"/>
+		<set><if test="corpid != null">corpid = #{corpid,jdbcType=INTEGER},</if><if test="uid != null">uid = #{uid,jdbcType=BIGINT},</if><if test="name != null">name = #{name,jdbcType=VARCHAR},</if><if test="timeYm != null">time_ym = #{timeYm,jdbcType=INTEGER},</if><if test="timeYmd != null">time_ymd = #{timeYmd,jdbcType=INTEGER},</if><if test="timeYmdh != null">time_ymdh = #{timeYmdh,jdbcType=INTEGER},</if><if test="deptUniqueId != null">dept_unique_id = #{deptUniqueId,jdbcType=VARCHAR},</if><if test="deptName != null">dept_name = #{deptName,jdbcType=VARCHAR},</if><if test="logonTime != null">logon_time = #{logonTime,jdbcType=TIMESTAMP},</if><if test="logoffTime != null">logoff_time = #{logoffTime,jdbcType=TIMESTAMP},</if><if test="lastTime != null">last_time = #{lastTime,jdbcType=TIMESTAMP},</if><if test="onlineDuration != null">online_duration = #{onlineDuration,jdbcType=BIGINT},</if><if test="isOnduty != null">is_onduty = #{isOnduty,jdbcType=INTEGER},</if><if test="session != null">session = #{session,jdbcType=VARCHAR},</if><if test="endFlag != null">end_flag = #{endFlag,jdbcType=INTEGER},</if><if test="state != null">state = #{state,jdbcType=INTEGER},</if><if test="real != null">`real` = #{real,jdbcType=INTEGER},</if></set>
+		WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+	<!--====================================== 修改结束-UPDATE_FINISH ======================================-->
+
+	<!--====================================== 新增开始-INSERT_BEGIN ======================================-->
+	<insert id="insert" parameterType="com.zom.statistics.dao.po.StaUserOnlineRecord" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO <include refid="table"/>(corpid,uid,name,time_ym,time_ymd,time_ymdh,dept_unique_id,dept_name,logon_time,logoff_time,last_time,online_duration,is_onduty,session,end_flag,state,`real`)
+		VALUES( #{corpid,jdbcType=INTEGER},#{uid,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{timeYm,jdbcType=INTEGER},#{timeYmd,jdbcType=INTEGER},#{timeYmdh,jdbcType=INTEGER},#{deptUniqueId,jdbcType=VARCHAR},#{deptName,jdbcType=VARCHAR},#{logonTime,jdbcType=TIMESTAMP},#{logoffTime,jdbcType=TIMESTAMP},#{lastTime,jdbcType=TIMESTAMP},#{onlineDuration,jdbcType=BIGINT},#{isOnduty,jdbcType=INTEGER},#{session,jdbcType=VARCHAR},#{endFlag,jdbcType=INTEGER},#{state,jdbcType=INTEGER},#{real,jdbcType=INTEGER})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.zom.statistics.dao.po.StaUserOnlineRecord" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO <include refid="table"/>
+		<trim prefix="(" suffix=")" suffixOverrides=","> <if test="corpid != null"> corpid,</if><if test="uid != null"> uid,</if><if test="name != null"> name,</if><if test="timeYm != null"> time_ym,</if><if test="timeYmd != null"> time_ymd,</if><if test="timeYmdh != null"> time_ymdh,</if><if test="deptUniqueId != null"> dept_unique_id,</if><if test="deptName != null"> dept_name,</if><if test="logonTime != null"> logon_time,</if><if test="logoffTime != null"> logoff_time,</if><if test="lastTime != null"> last_time,</if><if test="onlineDuration != null"> online_duration,</if><if test="isOnduty != null"> is_onduty,</if><if test="session != null"> session,</if><if test="endFlag != null"> end_flag,</if><if test="state != null"> state,</if><if test="real != null"> `real`,</if></trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=","><if test="corpid != null">#{corpid,jdbcType=INTEGER},</if><if test="uid != null">#{uid,jdbcType=BIGINT},</if><if test="name != null">#{name,jdbcType=VARCHAR},</if><if test="timeYm != null">#{timeYm,jdbcType=INTEGER},</if><if test="timeYmd != null">#{timeYmd,jdbcType=INTEGER},</if><if test="timeYmdh != null">#{timeYmdh,jdbcType=INTEGER},</if><if test="deptUniqueId != null">#{deptUniqueId,jdbcType=VARCHAR},</if><if test="deptName != null">#{deptName,jdbcType=VARCHAR},</if><if test="logonTime != null">#{logonTime,jdbcType=TIMESTAMP},</if><if test="logoffTime != null">#{logoffTime,jdbcType=TIMESTAMP},</if><if test="lastTime != null">#{lastTime,jdbcType=TIMESTAMP},</if><if test="onlineDuration != null">#{onlineDuration,jdbcType=BIGINT},</if><if test="isOnduty != null">#{isOnduty,jdbcType=INTEGER},</if><if test="session != null">#{session,jdbcType=VARCHAR},</if><if test="endFlag != null">#{endFlag,jdbcType=INTEGER},</if><if test="state != null">#{state,jdbcType=INTEGER},</if><if test="real != null">#{real,jdbcType=INTEGER},</if></trim>
+	</insert>
+
+	<insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO <include refid="table"/>(corpid,uid,name,time_ym,time_ymd,time_ymdh,dept_unique_id,dept_name,logon_time,logoff_time,last_time,online_duration,is_onduty,session,end_flag,state,`real`)
+		VALUES <foreach collection="list" item="c" separator=",">(#{c.corpid,jdbcType=INTEGER},#{c.uid,jdbcType=BIGINT},#{c.name,jdbcType=VARCHAR},#{c.timeYm,jdbcType=INTEGER},#{c.timeYmd,jdbcType=INTEGER},#{c.timeYmdh,jdbcType=INTEGER},#{c.deptUniqueId,jdbcType=VARCHAR},#{c.deptName,jdbcType=VARCHAR},#{c.logonTime,jdbcType=TIMESTAMP},#{c.logoffTime,jdbcType=TIMESTAMP},#{c.lastTime,jdbcType=TIMESTAMP},#{c.onlineDuration,jdbcType=BIGINT},#{c.isOnduty,jdbcType=INTEGER},#{c.session,jdbcType=VARCHAR},#{c.endFlag,jdbcType=INTEGER},#{c.state,jdbcType=INTEGER},#{c.real,jdbcType=INTEGER})</foreach>
+	</insert>
+	<!--====================================== 新增结束-INSERT_FINISH ======================================-->
+
+	<!--====================================== 删除开始-DELETE_BEGIN ======================================-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	    DELETE FROM <include refid="table"/> WHERE id = #{id,jdbcType=BIGINT}
+	</delete>
+	<!--====================================== 删除结束-DELETE_FINISH ======================================-->
+
+</mapper>

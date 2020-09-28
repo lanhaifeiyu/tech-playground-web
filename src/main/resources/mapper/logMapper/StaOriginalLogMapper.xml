@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zom.statistics.dao.mapper.logMapper.StaOriginalLogMapper">
+
+	<!-- @author yuronghua-airson @template 2019.08.02 v11.0 @organization Zero One More, Inc. http://www.01more.com @time 2020-02-27 09:57:44 -->
+
+	<!--====================================== 设置开始-CONFIG_BEGIN ======================================-->
+	<sql id="table">sta_original_log</sql>
+	<!-- 所有基础字段 -->
+    <sql id="baseColumns">A.id AS id,A.content AS content</sql>
+	<!-- 分组  -->
+	<sql id="groupBy">
+		<if test="groupBy != null and groupBy !='' "> GROUP BY ${groupBy,jdbcType=VARCHAR} </if>
+	</sql>
+	<!-- 排序  -->
+	<sql id="orderBy">
+		<if test="orderBy != null and orderBy !='' ">
+			<if test="selfOrder == null">ORDER BY A.${orderBy}</if>
+			<if test="selfOrder != null">ORDER BY ${orderBy}</if>
+		</if>
+		<if test="ascOrDesc != null and ascOrDesc !='' and selfOrder == null "> ${ascOrDesc}</if>
+		<if test="orderBy == null and ascOrDesc == null "> ORDER BY A.id DESC</if>
+	</sql>
+	<!-- 分页 -->
+	<sql id="limitCount">
+		<if test="count != null and count !='' "> LIMIT ${start},${count}</if>
+	</sql>
+	<!--====================================== 设置结束-CONFIG_FINISH ======================================-->
+
+
+	<!--=@@@@@@============================= 自定义内容 开始 _@CAUTION_SELF_BEGIN@_ =============================@@@@@@=-->
+	<sql id="joinColumns"></sql>
+	<sql id="baseSearch"></sql>
+	<sql id="joinSearch"></sql>
+	<sql id="leftJoin"></sql>
+
+	<select id="selectListByLastPkId" resultType="com.zom.statistics.dao.po.StaOriginalLog" >
+		SELECT id, content FROM sta_original_log WHERE id > #{lastPkId} LIMIT #{count}
+	</select>
+
+	<insert id="insertBatchByStringList">
+		INSERT INTO <include refid="table"/>(content)
+		VALUES <foreach collection="list" item="c" separator=",">(#{c})</foreach>
+	</insert>
+
+	<!-- old below -->
+
+	<select id="selectByStartId" resultType="com.zom.statistics.dao.po.StaOriginalLog" >
+		select id, content from sta_original_log where id > #{startId} limit 2000
+	</select>
+
+	<insert id="insertList" parameterType="com.zom.statistics.dao.po.StaOriginalLog">
+		insert into sta_original_log (`content`) values
+		<foreach collection="list" item="c" separator=",">
+			(#{c.content})
+		</foreach>
+	</insert>
+	<!--=@@@@@@============================= 自定义内容 结束 _@CAUTION_SELF_FINISH@_ =============================@@@@@@=-->
+
+
+	<!--====================================== 查询开始-SELECT_BEGIN ======================================-->
+	<select id="load" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaOriginalLog">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaOriginalLog">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaOriginalLog">
+    	SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> LIMIT 0,1
+	</select>
+
+	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaOriginalLog">
+    	SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> <include refid="limitCount"/>
+	</select>
+
+	<select id="selectCountByCondition" parameterType="java.util.Map" resultType="long">
+		SELECT COUNT(*) FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where>
+	</select>
+	<!--====================================== 查询结束-SELECT_FINISH ======================================-->
+
+	<!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
+	<!-- <-#-if cMap_has_next>,</-#-if> -->
+	<update id="updateByPrimaryKey" parameterType="com.zom.statistics.dao.po.StaOriginalLog">
+	    UPDATE <include refid="table"/>
+		<set>content = #{content,jdbcType=VARCHAR},</set>
+	    WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.zom.statistics.dao.po.StaOriginalLog">
+	    UPDATE <include refid="table"/>
+		<set><if test="content != null">content = #{content,jdbcType=VARCHAR},</if></set>
+	    WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+    <!--====================================== 修改结束-UPDATE_FINISH ======================================-->
+
+	<!--====================================== 新增开始-INSERT_BEGIN ======================================-->
+	<insert id="insert" parameterType="com.zom.statistics.dao.po.StaOriginalLog" useGeneratedKeys="true" keyProperty="id">
+	    INSERT INTO <include refid="table"/>(content)
+	    VALUES( #{content,jdbcType=VARCHAR})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.zom.statistics.dao.po.StaOriginalLog" useGeneratedKeys="true" keyProperty="id">
+	    INSERT INTO <include refid="table"/>
+		<trim prefix="(" suffix=")" suffixOverrides=","> <if test="content != null"> content,</if></trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=","><if test="content != null">#{content,jdbcType=VARCHAR},</if></trim>
+	</insert>
+
+	<insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO <include refid="table"/>(content)
+		VALUES <foreach collection="list" item="c" separator=",">(#{c.content,jdbcType=VARCHAR})</foreach>
+	</insert>
+  	<!--====================================== 新增结束-INSERT_FINISH ======================================-->
+
+	<!--====================================== 删除开始-DELETE_BEGIN ======================================-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	    DELETE FROM <include refid="table"/> WHERE id = #{id,jdbcType=BIGINT}
+	</delete>
+	<!--====================================== 删除结束-DELETE_FINISH ======================================-->
+
+</mapper>

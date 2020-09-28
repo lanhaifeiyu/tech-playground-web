@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zom.statistics.dao.mapper.logMapper.StaParsePositionMapper">
+
+	<!-- @author yuronghua-airson @template 2019.08.02 v11.0 @organization Zero One More, Inc. http://www.01more.com @time 2020-02-27 09:57:44 -->
+
+	<!--====================================== 设置开始-CONFIG_BEGIN ======================================-->
+	<sql id="table">sta_parse_position</sql>
+	<!-- 所有基础字段 -->
+	<sql id="baseColumns">A.id AS id,A.table_name AS tableName,A.last_pk_id AS lastPkId,A.update_time AS updateTime</sql>
+	<!-- 分组  -->
+	<sql id="groupBy">
+		<if test="groupBy != null and groupBy !='' "> GROUP BY ${groupBy,jdbcType=VARCHAR} </if>
+	</sql>
+	<!-- 排序  -->
+	<sql id="orderBy">
+		<if test="orderBy != null and orderBy !='' ">
+			<if test="selfOrder == null">ORDER BY A.${orderBy}</if>
+			<if test="selfOrder != null">ORDER BY ${orderBy}</if>
+		</if>
+		<if test="ascOrDesc != null and ascOrDesc !='' and selfOrder == null "> ${ascOrDesc}</if>
+		<if test="orderBy == null and ascOrDesc == null "> ORDER BY A.id DESC</if>
+	</sql>
+	<!-- 分页 -->
+	<sql id="limitCount">
+		<if test="count != null and count !='' "> LIMIT ${start},${count}</if>
+	</sql>
+	<!--====================================== 设置结束-CONFIG_FINISH ======================================-->
+
+
+	<!--=@@@@@@============================= 自定义内容 开始 _@CAUTION_SELF_BEGIN@_ =============================@@@@@@=-->
+	<sql id="joinColumns"></sql>
+	<sql id="baseSearch"></sql>
+	<sql id="joinSearch"></sql>
+	<sql id="leftJoin"></sql>
+
+	<select id="selectLastPkIdByTableName" resultType="java.lang.Long">
+		SELECT last_pk_id FROM <include refid="table"/> WHERE `table_name` = #{tableName}
+	</select>
+
+	<select id="selectAll" resultType="com.zom.statistics.dao.po.StaParsePosition">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A
+	</select>
+
+	<!-- 但是还有如果ID不连续也有问题，不应该用增加量来更新，应该取业务数据中的最大ID来更新,这就会解决起始位置不致和不连续的问题 -->
+	<update id="updateLastPkIdByTableName">
+		UPDATE <include refid="table"/> SET last_pk_id = #{lastPkId},update_time = NOW() WHERE `table_name` = #{tableName}
+	</update>
+
+	<!-- old below -->
+
+	<select id="select" resultType="com.zom.statistics.dao.po.StaParsePosition" parameterType="com.zom.statistics.dao.po.StaParsePosition">
+		select id, `table_name`, last_pk_id, update_time from sta_parse_position
+		<where>
+			<if test="id != null and id != ''">
+				and id = #{id}
+			</if>
+			<if test="tableName != null and tableName != ''">
+				and `table_name` = #{tableName}
+			</if>
+		</where>
+		for update
+	</select>
+
+	<select id="selectByTableName" resultType="com.zom.statistics.dao.po.StaParsePosition">
+		SELECT id, `table_name`, last_pk_id, update_time FROM sta_parse_position WHERE `table_name` = #{tableName}
+	</select>
+	<!--=@@@@@@============================= 自定义内容 结束 _@CAUTION_SELF_FINISH@_ =============================@@@@@@=-->
+
+
+	<!--====================================== 查询开始-SELECT_BEGIN ======================================-->
+	<select id="load" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaParsePosition">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaParsePosition">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaParsePosition">
+    	SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> LIMIT 0,1
+	</select>
+
+	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaParsePosition">
+    	SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> <include refid="limitCount"/>
+	</select>
+
+	<select id="selectCountByCondition" parameterType="java.util.Map" resultType="long">
+		SELECT COUNT(*) FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where>
+	</select>
+	<!--====================================== 查询结束-SELECT_FINISH ======================================-->
+
+	<!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
+	<!-- <-#-if cMap_has_next>,</-#-if> -->
+	<update id="updateByPrimaryKey" parameterType="com.zom.statistics.dao.po.StaParsePosition">
+	    UPDATE <include refid="table"/>
+		<set>table_name = #{tableName,jdbcType=VARCHAR},last_pk_id = #{lastPkId,jdbcType=BIGINT},update_time = #{updateTime,jdbcType=TIMESTAMP},</set>
+	    WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.zom.statistics.dao.po.StaParsePosition">
+	    UPDATE <include refid="table"/>
+		<set>
+			<if test="tableName != null">table_name = #{tableName,jdbcType=VARCHAR},</if>
+			<if test="lastPkId != null">last_pk_id = #{lastPkId,jdbcType=BIGINT},</if>
+			<if test="updateTime != null">update_time = #{updateTime,jdbcType=TIMESTAMP},</if></set>
+	    WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+    <!--====================================== 修改结束-UPDATE_FINISH ======================================-->
+
+	<!--====================================== 新增开始-INSERT_BEGIN ======================================-->
+	<insert id="insert" parameterType="com.zom.statistics.dao.po.StaParsePosition" useGeneratedKeys="true" keyProperty="id">
+	    INSERT INTO <include refid="table"/>(table_name,last_pk_id,update_time)
+	    VALUES( #{tableName,jdbcType=VARCHAR},#{lastPkId,jdbcType=BIGINT},#{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.zom.statistics.dao.po.StaParsePosition" useGeneratedKeys="true" keyProperty="id">
+	    INSERT INTO <include refid="table"/>
+		<trim prefix="(" suffix=")" suffixOverrides=","> <if test="tableName != null"> table_name,</if><if test="lastPkId != null"> last_pk_id,</if><if test="updateTime != null"> update_time,</if></trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=","><if test="tableName != null">#{tableName,jdbcType=VARCHAR},</if><if test="lastPkId != null">#{lastPkId,jdbcType=BIGINT},</if><if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if></trim>
+	</insert>
+
+	<insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO <include refid="table"/>(table_name,last_pk_id,update_time)
+		VALUES <foreach collection="list" item="c" separator=",">(#{c.tableName,jdbcType=VARCHAR},#{c.lastPkId,jdbcType=BIGINT},#{c.updateTime,jdbcType=TIMESTAMP})</foreach>
+	</insert>
+  	<!--====================================== 新增结束-INSERT_FINISH ======================================-->
+
+	<!--====================================== 删除开始-DELETE_BEGIN ======================================-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	    DELETE FROM <include refid="table"/> WHERE id = #{id,jdbcType=BIGINT}
+	</delete>
+	<!--====================================== 删除结束-DELETE_FINISH ======================================-->
+
+</mapper>

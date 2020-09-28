@@ -1,0 +1,152 @@
+/* 上方栏的超链接颜色*/
+.ivu-breadcrumb a {
+  color: white;
+}
+/* 菜单回缩键的颜色*/
+.ivu-layout-sider-trigger{
+  background:#111528;
+}
+
+/*实时消息框的关闭键颜色*/
+.ivu-icon-ios-close:before {
+  color: #515a6e;
+}
+
+/* 时间输入框的颜色*/
+.ivu-input {
+  border: 1px solid #666;
+  color: #f2f2f2;
+  background-color: #666;}
+
+/* 单选按钮（图表类型切换）颜色*/
+.ivu-radio-group-button .ivu-radio-wrapper{
+  background: #17233d;
+}
+
+
+
+/* 单选框的颜色*/
+.ivu-select-selection {
+  border: none;
+  background: #666;
+}
+
+/* 选择输入框（输部门/人名称搜索）颜色*/
+.ivu-select-input {
+  color: white;
+  background: #666;
+}
+
+/*选择框中显示被选中文字颜色*/
+.ivu-select-selected-value {
+  color: white;
+}
+
+/* 页面切换按钮颜色*/
+.ivu-page-next, .ivu-page-prev {
+  background-color: transparent;
+}
+
+/*表格抬头颜色*/
+.ivu-table th {
+  background-color: #17233d;
+}
+
+/*表格内部颜色*/
+.ivu-table td {
+  background-color: #515a6e;
+
+}
+
+/*表格字体颜色*/
+.ivu-table{
+  color:white;
+}
+
+/*基础按钮内部颜色*/
+.ivu-btn-primary {
+  background-color: #1d5085;
+}
+
+
+/*表格鼠标悬停高亮颜色*/
+tr.ivu-table-row-hover td{
+  background-color: #080909;
+}
+
+
+/*tree鼠标悬停*/
+.ivu-tree-title:hover{background-color: #0c56c4
+}
+
+/*树表选择颜色*/
+.ivu-tree-title-selected, .ivu-tree-title-selected:hover {
+  background-color: #0c56c4;
+}
+/*单选选项颜色*/
+.ivu-select-item {
+  color: white;
+}
+
+/*单选选项鼠标悬停颜色*/
+.ivu-select-item:hover {
+  background: #878c97;
+}
+.ivu-select-item-focus {
+  background: #8b91a3;
+}
+
+/*树文字颜色（用户列表和部门列表）*/
+.ivu-tree-title {
+  color: #e8eaec;
+}
+
+/*按钮悬停颜色*/
+.ivu-btn:hover{background: #6394e8;color: white;
+}
+
+/*a链接颜色*/
+a {
+  color: #094789;
+}
+
+
+/*下拉框颜色*/
+.ivu-select-dropdown{
+  background: #515a6e;
+}
+
+/*下拉框鼠标悬停*/
+.ivu-dropdown-item:hover{background: #1c1b1b
+}
+
+/* 标签颜色（屏蔽部门处）*/
+.ivu-tag {
+  background: #666;
+  border: none;
+}
+
+/* 标签文字颜色*/
+.ivu-tag-text {
+  color: #f8f8f9;
+}
+
+/*向后翻页的图标颜色*/
+.ivu-icon-ios-arrow-forward:before {
+  color: white;
+}
+
+/*向前翻页的图标颜色*/
+.ivu-icon-ios-arrow-back:before {
+  color: white;
+}
+
+/*上方小按钮颜色*/
+.ivu-btn-circle-outline.ivu-btn-icon-only.ivu-btn-small, .ivu-btn-circle.ivu-btn-icon-only.ivu-btn-small {
+  color: white;
+}
+
+/*菜单被选项*/
+.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu) {
+  background: #2a4071;
+}

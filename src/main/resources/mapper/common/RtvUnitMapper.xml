@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zom.statistics.dao.mapper.common.RtvUnitMapper">
+    <!--====================================== 查询开始-SELECT_BEGIN ======================================-->
+
+    <!-- old below -->
+
+    <select id="selectByUniqueIn" resultType="com.zom.statistics.DTO.RtvUnit">
+        select * from rtv_unit_table where unique_id in (${uniqueIdIn})
+    </select>
+    <select id="selectCommonUniqueUp" resultType="string">
+		select getUnitParentLst('${uniqueId}')
+	</select>
+
+    <select id="selectNameByUniqueId" resultType="string">
+        select `name` from rtv_unit_table where unique_id = #{uniqueId}
+    </select>
+
+    <select id="selectCommonUniqueDown" resultType="string">
+		select getUnitChildLst('${uniqueId}')
+	</select>
+
+    <select id="selectUniqueIdByParentId" resultType="string">
+        select unique_id from rtv_unit_table where parent_id = #{parentId}
+    </select>
+
+    <select id="selectNameByUniqueIn" resultType="com.zom.statistics.DTO.RtvUnit">
+        select name, unique_id from rtv_unit_table where unique_id in (${uniqueIdIn})
+    </select>
+
+    <select id="selectUniqueIdByCorpId" resultType="string">
+        select unique_id from rtv_unit_table where corp_id = #{corpId} and `state` = 1
+    </select>
+
+    <select id="selectLike" resultType="com.zom.statistics.DTO.RtvUnit" parameterType="com.zom.statistics.DTO.UnitSearchDto">
+        select id, `name`, short_name, unique_id, parent_id, state from rtv_unit_table
+        <where>
+            <if test="name != null and name != ''">
+                and `name` like concat("%", #{name}, "%")
+            </if>
+            <if test="shortName != null and shortName != ''">
+                and short_name like concat("%", #{shortName}, "%")
+            </if>
+            <if test="true">
+                and `state` = 1
+            </if>
+        </where>
+    </select>
+    <!--====================================== 查询结束-SELECT_FINISH ======================================-->
+
+    <!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
+    <!--====================================== 修改结束-UPDATE_FINISH ======================================-->
+
+    <!--====================================== 新增开始-INSERT_BEGIN ======================================-->
+    <!--====================================== 新增结束-INSERT_FINISH ======================================-->
+
+    <!--====================================== 删除开始-DELETE_BEGIN ======================================-->
+    <!--====================================== 删除结束-DELETE_FINISH ======================================-->
+
+</mapper>

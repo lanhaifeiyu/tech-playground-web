@@ -1,0 +1,962 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zom.statistics.dao.mapper.logMapper.StaDayUserMapper">
+
+	<!-- @author yuronghua-airson @template 2019.08.02 v11.0 @organization Zero One More, Inc. http://www.01more.com @time 2020-02-27 09:57:44 -->
+
+	<!--====================================== 设置开始-CONFIG_BEGIN ======================================-->
+	<sql id="table">sta_day_user</sql>
+	<!-- 所有基础字段 -->
+	<sql id="baseColumns">A.id AS id,A.unique_id AS uniqueId,A.corpid AS corpid,A.uid AS uid,A.name AS name,A.time_ymd AS timeYmd,A.dept_unique_id AS deptUniqueId,A.dept_name AS deptName,A.online_duration AS onlineDuration,A.logon_time AS logonTime,A.talk_count AS talkCount,A.individual_talk_count AS individualTalkCount,A.group_talk_count AS groupTalkCount,A.talk_duration AS talkDuration,A.individual_talk_duration AS individualTalkDuration,A.group_talk_duration AS groupTalkDuration,A.video_all_count AS videoAllCount,A.video_call_count AS videoCallCount,A.video_upload_count AS videoUploadCount,A.video_rollcall_count AS videoRollcallCount,A.video_conf_count AS videoConfCount,A.video_duration AS videoDuration,A.sos_count AS sosCount,A.photo_upload_count AS photoUploadCount,A.im_count AS imCount,A.individual_im_count AS individualImCount,A.group_im_count AS groupImCount,A.onpost_duration AS onpostDuration,A.mileage AS mileage,A.tmp_group_count AS tmpGroupCount,A.tmp_group_file_count AS tmpGroupFileCount,A.state AS state,A.update_time AS updateTime</sql>
+	<!-- 分组  -->
+	<sql id="groupBy">
+		<if test="groupBy != null and groupBy !='' "> GROUP BY ${groupBy,jdbcType=VARCHAR} </if>
+	</sql>
+	<!-- 排序  -->
+	<sql id="orderBy">
+		<if test="orderBy != null and orderBy !='' ">
+			<if test="selfOrder == null">ORDER BY A.${orderBy}</if>
+			<if test="selfOrder != null">ORDER BY ${orderBy}</if>
+		</if>
+		<if test="ascOrDesc != null and ascOrDesc !='' and selfOrder == null "> ${ascOrDesc}</if>
+		<if test="orderBy == null and ascOrDesc == null "> ORDER BY A.id DESC</if>
+	</sql>
+	<!-- 分页 -->
+	<sql id="limitCount">
+		<if test="count != null and count !='' "> LIMIT ${start},${count}</if>
+	</sql>
+	<!--====================================== 设置结束-CONFIG_FINISH ======================================-->
+
+
+	<!--=@@@@@@============================= 自定义内容 开始 _@CAUTION_SELF_BEGIN@_ =============================@@@@@@=-->
+	<sql id="joinColumns"></sql>
+	<sql id="baseSearch"></sql>
+	<sql id="joinSearch"></sql>
+	<sql id="leftJoin"></sql>
+
+	<insert id="insertOrUpdateList">
+		INSERT INTO <include refid="table"/>(unique_id,corpid,uid,name,time_ymd,dept_unique_id,dept_name,online_duration,logon_time,talk_count,individual_talk_count,group_talk_count,talk_duration,individual_talk_duration,group_talk_duration,video_all_count,video_call_count,video_upload_count,video_rollcall_count,video_conf_count,video_duration,sos_count,photo_upload_count,im_count,individual_im_count,group_im_count,onpost_duration,mileage,tmp_group_count,tmp_group_file_count,state,update_time)
+		VALUES <foreach collection="list" item="c" separator=",">(#{c.uniqueId,jdbcType=VARCHAR},#{c.corpid,jdbcType=INTEGER},#{c.uid,jdbcType=BIGINT},#{c.name,jdbcType=VARCHAR},#{c.timeYmd,jdbcType=INTEGER},#{c.deptUniqueId,jdbcType=VARCHAR},#{c.deptName,jdbcType=VARCHAR},#{c.onlineDuration,jdbcType=BIGINT},#{c.logonTime,jdbcType=TIMESTAMP},#{c.talkCount,jdbcType=INTEGER},#{c.individualTalkCount,jdbcType=INTEGER},#{c.groupTalkCount,jdbcType=INTEGER},#{c.talkDuration,jdbcType=INTEGER},#{c.individualTalkDuration,jdbcType=INTEGER},#{c.groupTalkDuration,jdbcType=INTEGER},#{c.videoAllCount,jdbcType=INTEGER},#{c.videoCallCount,jdbcType=INTEGER},#{c.videoUploadCount,jdbcType=INTEGER},#{c.videoRollcallCount,jdbcType=INTEGER},#{c.videoConfCount,jdbcType=INTEGER},#{c.videoDuration,jdbcType=INTEGER},#{c.sosCount,jdbcType=INTEGER},#{c.photoUploadCount,jdbcType=INTEGER},#{c.imCount,jdbcType=INTEGER},#{c.individualImCount,jdbcType=INTEGER},#{c.groupImCount,jdbcType=INTEGER},#{c.onpostDuration,jdbcType=INTEGER},#{c.mileage,jdbcType=INTEGER},#{c.tmpGroupCount,jdbcType=INTEGER},#{c.tmpGroupFileCount,jdbcType=INTEGER},#{c.state,jdbcType=INTEGER},#{c.updateTime,jdbcType=TIMESTAMP})</foreach>
+		ON DUPLICATE KEY UPDATE
+		online_duration = IF(VALUES(online_duration) &lt;= 0, online_duration, online_duration+VALUES(online_duration)),
+		talk_count = IF(VALUES(talk_count) &lt;= 0, talk_count, talk_count+VALUES(talk_count)),
+		individual_talk_count = IF(VALUES(individual_talk_count) &lt;= 0, individual_talk_count, individual_talk_count+VALUES(individual_talk_count)),
+		group_talk_count = IF(VALUES(group_talk_count) &lt;= 0, group_talk_count, group_talk_count+VALUES(group_talk_count)),
+		talk_duration = IF(VALUES(talk_duration) &lt;= 0, talk_duration, talk_duration+VALUES(talk_duration)),
+		individual_talk_duration = IF(VALUES(individual_talk_duration) &lt;= 0, individual_talk_duration, individual_talk_duration+VALUES(individual_talk_duration)),
+		group_talk_duration = IF(VALUES(group_talk_duration) &lt;= 0, group_talk_duration, group_talk_duration+VALUES(group_talk_duration)),
+		video_all_count = IF(VALUES(video_all_count) &lt;= 0, video_all_count, video_all_count+VALUES(video_all_count)),
+		video_call_count = IF(VALUES(video_call_count) &lt;= 0, video_call_count, video_call_count+VALUES(video_call_count)),
+		video_upload_count = IF(VALUES(video_upload_count) &lt;= 0, video_upload_count, video_upload_count+VALUES(video_upload_count)),
+		video_rollcall_count = IF(VALUES(video_rollcall_count) &lt;= 0, video_rollcall_count, video_rollcall_count+VALUES(video_rollcall_count)),
+		video_conf_count = IF(VALUES(video_conf_count) &lt;= 0, video_conf_count, video_conf_count+VALUES(video_conf_count)),
+		video_duration = IF(VALUES(video_duration) &lt;= 0, video_duration, video_duration+VALUES(video_duration)),
+		sos_count = IF(VALUES(sos_count) &lt;= 0, sos_count, sos_count+VALUES(sos_count)),
+		photo_upload_count = IF(VALUES(photo_upload_count) &lt;= 0, photo_upload_count, photo_upload_count+VALUES(photo_upload_count)),
+		im_count = IF(VALUES(im_count) &lt;= 0, im_count, im_count+VALUES(im_count)),
+		individual_im_count = IF(VALUES(individual_im_count) &lt;= 0, individual_im_count, individual_im_count+VALUES(individual_im_count)),
+		group_im_count = IF(VALUES(group_im_count) &lt;= 0, group_im_count, group_im_count+VALUES(group_im_count)),
+		onpost_duration = IF(VALUES(onpost_duration) &lt;= 0, onpost_duration, onpost_duration+VALUES(onpost_duration)),
+		mileage = IF(VALUES(mileage) &lt;= 0, mileage, mileage+VALUES(mileage)),
+		tmp_group_count = IF(VALUES(tmp_group_count) &lt;= 0, tmp_group_count, tmp_group_count+VALUES(tmp_group_count)),
+		tmp_group_file_count = IF(VALUES(tmp_group_file_count) &lt;= 0, tmp_group_file_count, tmp_group_file_count+VALUES(tmp_group_file_count)),
+		update_time = VALUES(update_time)
+	</insert>
+
+	<insert id="insertOrUpdateDurationList">
+		INSERT INTO <include refid="table"/>(unique_id,corpid,uid,name,time_ymd,dept_unique_id,dept_name,online_duration,logon_time,talk_count,individual_talk_count,group_talk_count,talk_duration,video_all_count,video_call_count,video_upload_count,video_rollcall_count,video_conf_count,sos_count,photo_upload_count,im_count,individual_im_count,group_im_count,onpost_duration,mileage,tmp_group_count,tmp_group_file_count,update_time)
+		VALUES <foreach collection="list" item="c" separator=",">(#{c.uniqueId,jdbcType=VARCHAR},#{c.corpid,jdbcType=INTEGER},#{c.uid,jdbcType=BIGINT},#{c.name,jdbcType=VARCHAR},#{c.timeYmd,jdbcType=INTEGER},#{c.deptUniqueId,jdbcType=VARCHAR},#{c.deptName,jdbcType=VARCHAR},#{c.onlineDuration,jdbcType=INTEGER},#{c.logonTime,jdbcType=TIMESTAMP},#{c.talkCount,jdbcType=INTEGER},#{c.individualTalkCount,jdbcType=INTEGER},#{c.groupTalkCount,jdbcType=INTEGER},#{c.talkDuration,jdbcType=INTEGER},#{c.videoAllCount,jdbcType=INTEGER},#{c.videoCallCount,jdbcType=INTEGER},#{c.videoUploadCount,jdbcType=INTEGER},#{c.videoRollcallCount,jdbcType=INTEGER},#{c.videoConfCount,jdbcType=INTEGER},#{c.sosCount,jdbcType=INTEGER},#{c.photoUploadCount,jdbcType=INTEGER},#{c.imCount,jdbcType=INTEGER},#{c.individualImCount,jdbcType=INTEGER},#{c.groupImCount,jdbcType=INTEGER},#{c.onpostDuration,jdbcType=INTEGER},#{c.mileage,jdbcType=INTEGER},#{c.tmpGroupCount,jdbcType=INTEGER},#{c.tmpGroupFileCount,jdbcType=INTEGER},#{c.updateTime,jdbcType=TIMESTAMP})</foreach>
+		ON DUPLICATE KEY UPDATE
+		online_duration = IF(VALUES(online_duration) &lt;= 0, online_duration, online_duration+VALUES(online_duration)),
+		talk_duration = IF(VALUES(talk_duration) &lt;= 0, talk_duration, talk_duration+VALUES(talk_duration)),
+		individual_talk_duration = IF(VALUES(individual_talk_duration) &lt;= 0, individual_talk_duration, individual_talk_duration+VALUES(individual_talk_duration)),
+		group_talk_duration = IF(VALUES(group_talk_duration) &lt;= 0, group_talk_duration, group_talk_duration+VALUES(group_talk_duration)),
+		video_duration = IF(VALUES(video_duration) &lt;= 0, video_duration, video_duration+VALUES(video_duration)),
+		onpost_duration = IF(VALUES(onpost_duration) &lt;= 0, onpost_duration, onpost_duration+VALUES(onpost_duration)),
+		update_time = VALUES(update_time)
+	</insert>
+
+	<!-- old below -->
+	<select id="selectAllByCondition" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select uid
+		<if test="flag == 1 or flag == 100">
+			, sum(online_duration) online_duration
+		</if>
+		<if test="flag == 2 or flag == 100">
+			, sum(talk_count) talk_count
+		</if>
+		<if test="flag == 3 or flag == 100">
+			, sum(individual_talk_count) individual_talk_count
+		</if>
+		<if test="flag == 4 or flag == 100">
+			, sum(group_talk_count) group_talk_count
+		</if>
+		<if test="flag == 5 or flag == 100">
+			, sum(talk_duration) talk_duration
+		</if>
+		<if test="flag == 6 or flag == 100">
+			, sum(individual_talk_duration) individual_talk_duration
+		</if>
+		<if test="flag == 7 or flag == 100">
+			, sum(group_talk_duration) group_talk_duration
+		</if>
+		<if test="flag == 8 or flag == 100">
+			, sum(video_all_count) video_all_count
+		</if>
+		<if test="flag == 9 or flag == 100">
+			, sum(video_call_count) video_call_count
+		</if>
+		<if test="flag == 10 or flag == 100">
+			, sum(video_upload_count) video_upload_count
+		</if>
+		<if test="flag == 11 or flag == 100">
+			, sum(video_rollcall_count) video_rollcall_count
+		</if>
+		<if test="flag == 12 or flag == 100">
+			, sum(video_conf_count) video_conf_count
+		</if>
+		<if test="flag == 13 or flag == 100">
+			, sum(video_duration) video_duration
+		</if>
+		<if test="flag == 14 or flag == 100">
+			, sum(sos_count) sos_count
+		</if>
+		<if test="flag == 15 or flag == 100">
+			, sum(photo_upload_count) photo_upload_count
+		</if>
+		<if test="flag == 16 or flag == 100">
+			, sum(im_count) im_count
+		</if>
+		<if test="flag == 17 or flag == 100">
+			, sum(individual_im_count) individual_im_count
+		</if>
+		<if test="flag == 18 or flag == 100">
+			, sum(group_im_count) group_im_count
+		</if>
+		<if test="flag == 19 or flag == 100">
+			, sum(onpost_duration) onpost_duration
+		</if>
+		<if test="flag == 20 or flag == 100">
+			, sum(mileage) mileage
+		</if>
+		<if test="flag == 21 or flag == 100">
+			, sum(tmp_group_count) tmp_group_count
+		</if>
+		<if test="flag == 22 or flag == 100">
+			, sum(tmp_group_file_count) tmp_group_file_count
+		</if>
+		from sta_day_user
+		<where>
+			<if test="deptIdList != null and deptIdList.size() > 0">
+				and dept_unique_id in
+				<foreach collection="deptIdList" item="id" open="(" close=")" separator=",">
+					#{id}
+				</foreach>
+			</if>
+			<if test="uidList != null and uidList.size() > 0">
+				and uid in
+				<foreach collection="uidList" item="uid" open="(" close=")" separator=",">
+					#{uid}
+				</foreach>
+			</if>
+			<choose>
+				<when test="time_level != null and time_level == 'ym'">
+					<if test="start_time != null and start_time != ''">
+						and time_ymd &gt;= (#{start_time} * 100)
+					</if>
+					<if test="end_time != null and end_time != ''">
+						and time_ymd &lt;= (#{end_time} * 100 + 31)
+					</if>
+				</when>
+				<when test="time_level != null and time_level == 'ymd'">
+					<if test="start_time != null and start_time != ''">
+						and time_ymd &gt;= #{start_time}
+					</if>
+					<if test="end_time != null and end_time != ''">
+						and time_ymd &lt;= #{end_time}
+					</if>
+				</when>
+				<when test="time_level != null and time_level == 'ymdh'">
+				</when>
+				<otherwise></otherwise>
+			</choose>
+			<if test="flag != 100 and min != null">
+				and
+				<if test="flag == 1">
+					online_duration &gt;= ${min}
+				</if>
+				<if test="flag == 2">
+					talk_count &gt;= ${min}
+				</if>
+				<if test="flag == 3">
+					individual_talk_count &gt;= ${min}
+				</if>
+				<if test="flag == 4">
+					group_talk_count &gt;= ${min}
+				</if>
+				<if test="flag == 5">
+					talk_duration &gt;= ${min}
+				</if>
+				<if test="flag == 6">
+					individual_talk_duration &gt;= ${min}
+				</if>
+				<if test="flag == 7">
+					group_talk_duration &gt;= ${min}
+				</if>
+				<if test="flag == 8">
+					video_all_count &gt;= ${min}
+				</if>
+				<if test="flag == 9">
+					video_call_count &gt;= ${min}
+				</if>
+				<if test="flag == 10">
+					video_upload_count &gt;= ${min}
+				</if>
+				<if test="flag == 11">
+					video_rollcall_count &gt;= ${min}
+				</if>
+				<if test="flag == 12">
+					video_conf_count &gt;= ${min}
+				</if>
+				<if test="flag == 13">
+					video_duration &gt;= ${min}
+				</if>
+				<if test="flag == 14">
+					sos_count &gt;= ${min}
+				</if>
+				<if test="flag == 15">
+					photo_upload_count &gt;= ${min}
+				</if>
+				<if test="flag == 16">
+					im_count &gt;= ${min}
+				</if>
+				<if test="flag == 17">
+					individual_im_count &gt;= ${min}
+				</if>
+				<if test="flag == 18">
+					group_im_count &gt;= ${min}
+				</if>
+				<if test="flag == 19">
+					onpost_duration &gt;= ${min}
+				</if>
+				<if test="flag == 20">
+					mileage &gt;= ${min}
+				</if>
+				<if test="flag == 21">
+					tmp_group_count &gt;= ${min}
+				</if>
+				<if test="flag == 22">
+					tmp_group_file_count &gt;= ${min}
+				</if>
+			</if>
+			<if test="flag != 100 and max != null">
+				and
+				<if test="flag == 1">
+					online_duration &lt;= ${max}
+				</if>
+				<if test="flag == 2">
+					talk_count &lt;= ${max}
+				</if>
+				<if test="flag == 3">
+					individual_talk_count &lt;= ${max}
+				</if>
+				<if test="flag == 4">
+					group_talk_count &lt;= ${max}
+				</if>
+				<if test="flag == 5">
+					talk_duration &lt;= ${max}
+				</if>
+				<if test="flag == 6">
+					individual_talk_duration &lt;= ${max}
+				</if>
+				<if test="flag == 7">
+					group_talk_duration &lt;= ${max}
+				</if>
+				<if test="flag == 8">
+					video_all_count &lt;= ${max}
+				</if>
+				<if test="flag == 9">
+					video_call_count &lt;= ${max}
+				</if>
+				<if test="flag == 10">
+					video_upload_count &lt;= ${max}
+				</if>
+				<if test="flag == 11">
+					video_rollcall_count &lt;= ${max}
+				</if>
+				<if test="flag == 12">
+					video_conf_count &lt;= ${max}
+				</if>
+				<if test="flag == 13">
+					video_duration &lt;= ${max}
+				</if>
+				<if test="flag == 14">
+					sos_count &lt;= ${max}
+				</if>
+				<if test="flag == 15">
+					photo_upload_count &lt;= ${max}
+				</if>
+				<if test="flag == 16">
+					im_count &lt;= ${max}
+				</if>
+				<if test="flag == 17">
+					individual_im_count &lt;= ${max}
+				</if>
+				<if test="flag == 18">
+					group_im_count &lt;= ${max}
+				</if>
+				<if test="flag == 19">
+					onpost_duration &lt;= ${max}
+				</if>
+				<if test="flag == 20">
+					mileage &lt;= ${max}
+				</if>
+				<if test="flag == 21">
+					tmp_group_count &lt;= ${max}
+				</if>
+				<if test="flag == 22">
+					tmp_group_file_count &lt;= ${max}
+				</if>
+			</if>
+		</where>
+		group by uid
+		<if test="start != null and count != null">limit ${start}, ${count}</if>
+	</select>
+
+	<select id="selectAllByConditionCount" resultType="int" parameterType="map">
+		select count(*) from
+		(
+		select uid from sta_day_user
+		<where>
+			<if test="deptIdList != null and deptIdList.size() > 0">
+				and dept_unique_id in
+				<foreach collection="deptIdList" item="id" open="(" close=")" separator=",">
+					#{id}
+				</foreach>
+			</if>
+			<if test="uidList != null and uidList.size() > 0">
+				and uid in
+				<foreach collection="uidList" item="uid" open="(" close=")" separator=",">
+					#{uid}
+				</foreach>
+			</if>
+			<choose>
+				<when test="time_level != null and time_level == 'ym'">
+					<if test="start_time != null and start_time != ''">
+						and time_ymd &gt;= (#{start_time} * 100)
+					</if>
+					<if test="end_time != null and end_time != ''">
+						and time_ymd &lt;= (#{end_time} * 100 + 31)
+					</if>
+				</when>
+				<when test="time_level != null and time_level == 'ymd'">
+					<if test="start_time != null and start_time != ''">
+						and time_ymd &gt;= #{start_time}
+					</if>
+					<if test="end_time != null and end_time != ''">
+						and time_ymd &lt;= #{end_time}
+					</if>
+				</when>
+				<when test="time_level != null and time_level == 'ymdh'">
+				</when>
+				<otherwise></otherwise>
+			</choose>
+			<if test="flag != 100 and min != null">
+				and
+				<if test="flag == 1">
+					online_duration &gt;= ${min}
+				</if>
+				<if test="flag == 2">
+					talk_count &gt;= ${min}
+				</if>
+				<if test="flag == 3">
+					individual_talk_count &gt;= ${min}
+				</if>
+				<if test="flag == 4">
+					group_talk_count &gt;= ${min}
+				</if>
+				<if test="flag == 5">
+					talk_duration &gt;= ${min}
+				</if>
+				<if test="flag == 6">
+					individual_talk_duration &gt;= ${min}
+				</if>
+				<if test="flag == 7">
+					group_talk_duration &gt;= ${min}
+				</if>
+				<if test="flag == 8">
+					video_all_count &gt;= ${min}
+				</if>
+				<if test="flag == 9">
+					video_call_count &gt;= ${min}
+				</if>
+				<if test="flag == 10">
+					video_upload_count &gt;= ${min}
+				</if>
+				<if test="flag == 11">
+					video_rollcall_count &gt;= ${min}
+				</if>
+				<if test="flag == 12">
+					video_conf_count &gt;= ${min}
+				</if>
+				<if test="flag == 13">
+					video_duration &gt;= ${min}
+				</if>
+				<if test="flag == 14">
+					sos_count &gt;= ${min}
+				</if>
+				<if test="flag == 15">
+					photo_upload_count &gt;= ${min}
+				</if>
+				<if test="flag == 16">
+					im_count &gt;= ${min}
+				</if>
+				<if test="flag == 17">
+					individual_im_count &gt;= ${min}
+				</if>
+				<if test="flag == 18">
+					group_im_count &gt;= ${min}
+				</if>
+				<if test="flag == 19">
+					onpost_duration &gt;= ${min}
+				</if>
+				<if test="flag == 20">
+					mileage &gt;= ${min}
+				</if>
+				<if test="flag == 21">
+					tmp_group_count &gt;= ${min}
+				</if>
+				<if test="flag == 22">
+					tmp_group_file_count &gt;= ${min}
+				</if>
+			</if>
+			<if test="flag != 100 and max != null">
+				and
+				<if test="flag == 1">
+					online_duration &lt;= ${max}
+				</if>
+				<if test="flag == 2">
+					talk_count &lt;= ${max}
+				</if>
+				<if test="flag == 3">
+					individual_talk_count &lt;= ${max}
+				</if>
+				<if test="flag == 4">
+					group_talk_count &lt;= ${max}
+				</if>
+				<if test="flag == 5">
+					talk_duration &lt;= ${max}
+				</if>
+				<if test="flag == 6">
+					individual_talk_duration &lt;= ${max}
+				</if>
+				<if test="flag == 7">
+					group_talk_duration &lt;= ${max}
+				</if>
+				<if test="flag == 8">
+					video_all_count &lt;= ${max}
+				</if>
+				<if test="flag == 9">
+					video_call_count &lt;= ${max}
+				</if>
+				<if test="flag == 10">
+					video_upload_count &lt;= ${max}
+				</if>
+				<if test="flag == 11">
+					video_rollcall_count &lt;= ${max}
+				</if>
+				<if test="flag == 12">
+					video_conf_count &lt;= ${max}
+				</if>
+				<if test="flag == 13">
+					video_duration &lt;= ${max}
+				</if>
+				<if test="flag == 14">
+					sos_count &lt;= ${max}
+				</if>
+				<if test="flag == 15">
+					photo_upload_count &lt;= ${max}
+				</if>
+				<if test="flag == 16">
+					im_count &lt;= ${max}
+				</if>
+				<if test="flag == 17">
+					individual_im_count &lt;= ${max}
+				</if>
+				<if test="flag == 18">
+					group_im_count &lt;= ${max}
+				</if>
+				<if test="flag == 19">
+					onpost_duration &lt;= ${max}
+				</if>
+				<if test="flag == 20">
+					mileage &lt;= ${max}
+				</if>
+				<if test="flag == 21">
+					tmp_group_count &lt;= ${max}
+				</if>
+				<if test="flag == 22">
+					tmp_group_file_count &lt;= ${max}
+				</if>
+			</if>
+		</where>
+		group by uid
+		) as temp
+	</select>
+
+	<select id="selectByDay" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select id, corpid, uid, name, time_ymd, dept_unique_id, dept_name, online_duration, logon_time, talk_count, individual_talk_count, group_talk_count, talk_duration, individual_talk_duration,
+		group_talk_duration, video_all_count, video_call_count, video_upload_count, video_rollcall_count, video_conf_count, video_duration, sos_count, photo_upload_count, im_count, individual_im_count,
+		group_im_count, onpost_duration, mileage, tmp_group_count, tmp_group_file_count, state, update_time
+		from sta_day_user
+		<where>
+			<if test="day != null and day != ''">
+				time_ymd = #{day}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByUidIn" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select id, corpid, uid, name, time_ymd, dept_unique_id, dept_name, online_duration, logon_time, talk_count, individual_talk_count, group_talk_count, talk_duration, individual_talk_duration,
+			   group_talk_duration, video_all_count, video_call_count, video_upload_count, video_rollcall_count, video_conf_count, video_duration, sos_count, photo_upload_count, im_count, individual_im_count,
+			   group_im_count, onpost_duration, mileage, tmp_group_count, tmp_group_file_count, state, update_time
+		from sta_day_user
+		where uid in (${uidIn}) and time_ymd >= #{timeYmd}
+	</select>
+
+	<select id="selectByLastId" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select id, corpid, uid, name, time_ymd, dept_unique_id, dept_name, online_duration, logon_time, talk_count, individual_talk_count, group_talk_count, talk_duration, individual_talk_duration,
+			   group_talk_duration, video_all_count, video_call_count, video_upload_count, video_rollcall_count, video_conf_count, video_duration, sos_count, photo_upload_count, im_count, individual_im_count,
+			   group_im_count, onpost_duration, mileage, tmp_group_count, tmp_group_file_count, state, update_time
+		from sta_day_user where id > #{id}
+	</select>
+
+	<select id="selectUidByUniqueId" resultType="integer">
+		select id from rtv_user where department_id = #{uniqueId}
+	</select>
+
+	<select id="selectUidByUniqueIdIn" resultType="integer">
+		select id from rtv_user where department_id in (${uniqueIdIn})
+	</select>
+
+	<!--<select id="selectAllByCondition" resultType="com.zom.statistics.dao.po.StaDayUser">
+		SELECT uid,
+		( SELECT CONCAT_WS('``', IFNULL(b.`name`, ''), IFNULL(b.`dept_unique_id`, ''), IFNULL(b.`dept_name`, '')) FROM sta_day_user b WHERE b.id = MAX(A.id) ) AS `name`,
+		sum(online_duration) online_duration, sum(talk_count) talk_count, sum(individual_talk_count) individual_talk_count, sum(group_talk_count) group_talk_count,
+		sum(talk_duration) talk_duration, sum(individual_talk_duration) individual_talk_duration, sum(group_talk_duration) group_talk_duration, sum(video_all_count) video_all_count,
+		sum(video_call_count) video_call_count, sum(video_upload_count) video_upload_count, sum(video_rollcall_count) video_rollcall_count, sum(video_conf_count) video_conf_count,
+		sum(video_duration) video_duration, sum(sos_count) sos_count, sum(photo_upload_count) photo_upload_count, sum(im_count) im_count, sum(individual_im_count) individual_im_count,
+		sum(group_im_count) group_im_count, sum(onpost_duration) onpost_duration, sum(mileage) mileage, sum(tmp_group_count) tmp_group_count, sum(tmp_group_file_count) tmp_group_file_count
+		FROM sta_day_user A
+		<where>
+			<if test="deptIdList != null">
+				AND dept_unique_id IN (<foreach collection="deptIdList" item="id" index="index" open="(" close=")" separator=",">#{id}</foreach>)
+			</if>
+			<if test="uidList != null">
+				AND uid IN (<foreach collection="uidList" item="id" index="index" open="(" close=")" separator=",">#{id}</foreach>)
+			</if>
+			<choose>
+				<when test="time_level != null and time_level == 'ym'">
+					<if test="start_time != null and start_time != ''">
+						AND time_ymd >= (#{start_time} * 100)
+					</if>
+					<if test="end_time != null and end_time != ''">
+						AND time_ymd &lt;= (#{end_time} * 100 + 31)
+					</if>
+				</when>
+				<when test="time_level != null and time_level == 'ymd'">
+					<if test="start_time != null and start_time != ''">
+						AND time_ymd >= #{start_time}
+					</if>
+					<if test="end_time != null and end_time != ''">
+						AND time_ymd &lt;= #{end_time}
+					</if>
+				</when>
+				<when test="time_level != null and time_level == 'ymdh'">
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		</where>
+		GROUP BY uid
+		<if test="start != null and count != null ">LIMIT ${start},${count}</if>
+	</select>-->
+	<!--
+	说明：
+	1.time_level == 'ymdh' 暂时不支持
+	2.需要按天返回结果时，不用GROUP BY取消SUM
+	3.具体业务中的其他查询参数也类似：min_count, max_count, type ...
+	4.使用CONCAT_WS，主要目的是获取组内最后一条数据，以便使用最新的用户名，部门名等信息，这主需要java截取处理一下这部分数据
+	-->
+
+
+	<select id="selectByUniqueIdAndUidsAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select uid, name, dept_unique_id, dept_name, sum(online_duration) online_duration, sum(talk_count) talk_count, sum(individual_talk_count) individual_talk_count, sum(group_talk_count) group_talk_count,
+		sum(talk_duration) talk_duration, sum(individual_talk_duration) individual_talk_duration, sum(group_talk_duration) group_talk_duration, sum(video_all_count) video_all_count,
+		sum(video_call_count) video_call_count, sum(video_upload_count) video_upload_count, sum(video_rollcall_count) video_rollcall_count, sum(video_conf_count) video_conf_count,
+		sum(video_duration) video_duration, sum(sos_count) sos_count, sum(photo_upload_count) photo_upload_count, sum(im_count) im_count, sum(individual_im_count) individual_im_count,
+		sum(group_im_count) group_im_count, sum(onpost_duration) onpost_duration, sum(mileage) mileage, sum(tmp_group_count) tmp_group_count, sum(tmp_group_file_count) tmp_group_file_count
+		from sta_day_user
+		<where>
+			<if test="uniqueId != null and uniqueId != ''">
+				dept_unique_id = #{uniqueId}
+			</if>
+			<if test="uids != null and uids != ''">
+				and uid in (${uids})
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd like CONCAT(#{date}, '%')
+			</if>
+		</where>
+		group by uid, `name`, dept_unique_id, dept_name
+	</select>
+
+	<select id="selectByUidAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select sum(online_duration) online_duration, sum(talk_count) talk_count, sum(individual_talk_count) individual_talk_count, sum(group_talk_count) group_talk_count,
+		sum(talk_duration) talk_duration, sum(individual_talk_duration) individual_talk_duration, sum(group_talk_duration) group_talk_duration, sum(video_all_count) video_all_count,
+		sum(video_call_count) video_call_count, sum(video_upload_count) video_upload_count, sum(video_rollcall_count) video_rollcall_count, sum(video_conf_count) video_conf_count,
+		sum(video_duration) video_duration, sum(sos_count) sos_count, sum(photo_upload_count) photo_upload_count, sum(im_count) im_count, sum(individual_im_count) individual_im_count,
+		sum(group_im_count) group_im_count, sum(onpost_duration) onpost_duration, sum(mileage) mileage, sum(tmp_group_count) tmp_group_count, sum(tmp_group_file_count) tmp_group_file_count
+		from sta_day_user
+		<where>
+			<if test="uid != null and uid != ''">
+				and uid = #{uid}
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd like CONCAT(#{date}, '%')
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByUidAndUniqueIdsAndUidsAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select uid, name, dept_unique_id, dept_name, sum(online_duration) online_duration, sum(talk_count) talk_count, sum(individual_talk_count) individual_talk_count, sum(group_talk_count) group_talk_count,
+		sum(talk_duration) talk_duration, sum(individual_talk_duration) individual_talk_duration, sum(group_talk_duration) group_talk_duration, sum(video_all_count) video_all_count,
+		sum(video_call_count) video_call_count, sum(video_upload_count) video_upload_count, sum(video_rollcall_count) video_rollcall_count, sum(video_conf_count) video_conf_count,
+		sum(video_duration) video_duration, sum(sos_count) sos_count, sum(photo_upload_count) photo_upload_count, sum(im_count) im_count, sum(individual_im_count) individual_im_count,
+		sum(group_im_count) group_im_count, sum(onpost_duration) onpost_duration, sum(mileage) mileage, sum(tmp_group_count) tmp_group_count, sum(tmp_group_file_count) tmp_group_file_count
+		from sta_day_user
+		<where>
+			<if test="uniqueIdList != null and uniqueIdList.size() > 0">
+				dept_unique_id in
+				<foreach collection="uniqueIdList" item="uniqueId" open="(" separator="," close=")">
+					#{uniqueId}
+				</foreach>
+			</if>
+			<if test="uids != null and uids.size() > 0">
+				and uid in
+				<foreach collection="uids" item="uid" open="(" separator="," close=")">
+					#{uid}
+				</foreach>
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd like CONCAT(#{date}, '%')
+			</if>
+		</where>
+		group by uid, `name`, dept_unique_id, dept_name
+	</select>
+
+
+	<select id="selectUserByDateAndUid" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select time_ymd, uid, sum(online_duration) online_duration, sum(talk_count) talk_count, sum(individual_talk_count) individual_talk_count, sum(group_talk_count) group_talk_count,
+		sum(talk_duration) talk_duration, sum(individual_talk_duration) individual_talk_duration, sum(group_talk_duration) group_talk_duration, sum(video_all_count) video_all_count,
+		sum(video_call_count) video_call_count, sum(video_upload_count) video_upload_count, sum(video_rollcall_count) video_rollcall_count, sum(video_conf_count) video_conf_count,
+		sum(video_duration) video_duration, sum(sos_count) sos_count, sum(photo_upload_count) photo_upload_count, sum(im_count) im_count, sum(individual_im_count) individual_im_count,
+		sum(group_im_count) group_im_count, sum(onpost_duration) onpost_duration, sum(mileage) mileage, sum(tmp_group_count) tmp_group_count, sum(tmp_group_file_count) tmp_group_file_count
+		from sta_day_user
+		<where>
+			<if test="dates != null and dates.size() > 0">
+				time_ymd in
+				<foreach collection="dates" item="date" separator="," open="(" close=")">
+					#{date}
+				</foreach>
+			</if>
+			<if test="uids != null and uids.size() > 0">
+				and uid in
+				<foreach collection="uids" item="uid" separator="," open="(" close=")">
+					#{uid}
+				</foreach>
+			</if>
+			group by time_ymd, uid
+		</where>
+	</select>
+
+	<select id="selectAudioCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select dept_unique_id, dept_name, uid, `name`, sum(individual_talk_count) individual_talk_count, sum(group_talk_count) group_talk_count from sta_day_user
+		<where>
+			<if test="uids != null and uids != ''">
+				uid in (${uids})
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd like CONCAT(#{date}, '%')
+			</if>
+		</where>
+		group by dept_unique_id, dept_name, uid, `name`
+	</select>
+
+	<select id="selectAudioDurationByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select dept_unique_id, dept_name, uid, `name`, sum(individual_talk_duration) individual_talk_duration, sum(group_talk_duration) group_talk_duration from sta_day_user
+		<where>
+			<if test="uids != null and uids != ''">
+				uid in (${uids})
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd like CONCAT(#{date}, '%')
+			</if>
+		</where>
+		group by dept_unique_id, dept_name, uid, `name`
+	</select>
+
+	<select id="selectVideoCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select dept_unique_id, dept_name, uid, `name`, sum(video_call_count) video_call_count, sum(video_upload_count) video_upload_count,
+		sum(video_rollcall_count) video_rollcall_count, sum(video_conf_count) video_conf_count from sta_day_user
+		<where>
+			<if test="uids != null and uids != ''">
+				uid in (${uids})
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd like CONCAT(#{date}, '%')
+			</if>
+		</where>
+		group by dept_unique_id, dept_name, uid, `name`
+	</select>
+
+	<select id="selectVideoDurationByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select dept_unique_id, dept_name, uid, `name`, sum(video_duration) video_duration from sta_day_user
+		<where>
+			<if test="uids != null and uids != ''">
+				uid in (${uids})
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd like CONCAT(#{date}, '%')
+			</if>
+		</where>
+		group by dept_unique_id, dept_name, uid, `name`
+	</select>
+
+	<select id="selectPhotoCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select dept_unique_id, dept_name, uid, `name`, sum(photo_upload_count) photo_upload_count from sta_day_user
+		<where>
+			<if test="uids != null and uids != ''">
+				uid in (${uids})
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd like CONCAT(#{date}, '%')
+			</if>
+		</where>
+		group by dept_unique_id, dept_name, uid, `name`
+	</select>
+
+	<select id="selectSosCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select dept_unique_id, dept_name, uid, `name`, sum(sos_count) sos_count from sta_day_user
+		<where>
+			<if test="uids != null and uids != ''">
+				uid in (${uids})
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd like CONCAT(#{date}, '%')
+			</if>
+		</where>
+		group by dept_unique_id, dept_name, uid, `name`
+	</select>
+
+	<select id="selectImCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select dept_unique_id, dept_name, uid, `name`, sum(individual_im_count) individual_im_count, sum(group_im_count) group_im_count from sta_day_user
+		<where>
+			<if test="uids != null and uids != ''">
+				uid in (${uids})
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd like CONCAT(#{date}, '%')
+			</if>
+		</where>
+		group by dept_unique_id, dept_name, uid, `name`
+	</select>
+
+	<select id="selectOnlineDurationByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select dept_unique_id, dept_name, uid, `name`, sum(online_duration) online_duration from sta_day_user
+		<where>
+			<if test="uids != null and uids != ''">
+				uid in (${uids})
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd like CONCAT(#{date}, '%')
+			</if>
+		</where>
+		group by dept_unique_id, dept_name, uid, `name`
+	</select>
+
+	<select id="selectOnpostDurationByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select dept_unique_id, dept_name, uid, `name`, sum(onpost_duration) onpost_duration from sta_day_user
+		<where>
+			<if test="uids != null and uids != ''">
+				uid in (${uids})
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd like CONCAT(#{date}, '%')
+			</if>
+		</where>
+		group by dept_unique_id, dept_name, uid, `name`
+	</select>
+
+	<select id="selectMileageCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select dept_unique_id, dept_name, uid, `name`, sum(mileage) mileage from sta_day_user
+		<where>
+			<if test="uids != null and uids != ''">
+				uid in (${uids})
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd like CONCAT(#{date}, '%')
+			</if>
+		</where>
+		group by dept_unique_id, dept_name, uid, `name`
+	</select>
+
+	<select id="selectLogonCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select uid, sum(1) talk_count from sta_user_logon_record_origin
+		<where>
+			<if test="true">
+				`real` = 1
+			</if>
+			<if test="deptIdList != null and deptIdList.size() > 0">
+				and dept_unique_id in
+				<foreach collection="deptIdList" item="id" open="(" close=")" separator=",">
+					#{id}
+				</foreach>
+			</if>
+			<if test="uidList != null and uidList.size() > 0">
+				and uid in
+				<foreach collection="uidList" item="uid" open="(" close=")" separator=",">
+					#{uid}
+				</foreach>
+			</if>
+			<choose>
+				<when test="time_level != null and time_level == 'ym'">
+					<if test="start_time != null and start_time != ''">
+						and time_ymd &gt;= (#{start_time} * 100)
+					</if>
+					<if test="end_time != null and end_time != ''">
+						and time_ymd &lt;= (#{end_time} * 100 + 31)
+					</if>
+				</when>
+				<when test="time_level != null and time_level == 'ymd'">
+					<if test="start_time != null and start_time != ''">
+						and time_ymd &gt;= #{start_time}
+					</if>
+					<if test="end_time != null and end_time != ''">
+						and time_ymd &lt;= #{end_time}
+					</if>
+				</when>
+				<when test="time_level != null and time_level == 'ymdh'">
+				</when>
+				<otherwise></otherwise>
+			</choose>
+		</where>
+		group by uid
+		<if test="start != null and count != null">limit ${start}, ${count}</if>
+	</select>
+
+	<select id="selectTmpGroupCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select dept_unique_id, dept_name, uid, `name`, sum(tmp_group_count) tmp_group_count from sta_day_user
+		<where>
+			<if test="uids != null and uids != ''">
+				uid in (${uids})
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd like CONCAT(#{date}, '%')
+			</if>
+		</where>
+		group by dept_unique_id, dept_name, uid, `name`
+	</select>
+
+	<select id="selectByUniqueId" resultType="com.zom.statistics.dao.po.StaDayUser">
+		select id, corpid, uid, name, time_ymd, dept_unique_id, dept_name, online_duration, logon_time, talk_count, individual_talk_count, group_talk_count, talk_duration, individual_talk_duration,
+		group_talk_duration, video_all_count, video_call_count, video_upload_count, video_rollcall_count, video_conf_count, video_duration, sos_count, photo_upload_count, im_count, individual_im_count,
+		group_im_count, onpost_duration, mileage, tmp_group_count, tmp_group_file_count, state, update_time
+		state, update_time from sta_day_user
+		<where>
+			<if test="uniqueId != null and uniqueId != ''">
+				dept_unique_id = #{uniqueId}
+			</if>
+			<if test="startTime != null and startTime != ''">
+				and time_ymd &gt;= #{startTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and time_ymd &lt;= #{endTime}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertList">
+		insert into sta_day_user (corpid, uid, name, time_ymd, dept_unique_id, dept_name, online_duration, logon_time, talk_count, individual_talk_count, group_talk_count, talk_duration, video_all_count,
+		video_call_count, video_upload_count, video_rollcall_count, video_conf_count, sos_count, photo_upload_count, im_count, individual_im_count, group_im_count, onpost_duration, mileage, tmp_group_count,
+		tmp_group_file_count, update_time, state, individual_talk_duration, group_talk_duration, video_duration) values
+		<foreach collection="list" item="c" separator=",">
+			(#{c.corpid}, #{c.uid}, #{c.name}, #{c.timeYmd}, #{c.deptUniqueId}, #{c.deptName}, #{c.onlineDuration}, #{c.logonTime}, #{c.talkCount}, #{c.individualTalkCount}, #{c.groupTalkCount}, #{c.talkDuration},
+			#{c.videoAllCount}, #{c.videoCallCount}, #{c.videoUploadCount}, #{c.videoRollcallCount}, #{c.videoConfCount}, #{c.sosCount}, #{c.photoUploadCount}, #{c.imCount}, #{c.individualImCount},
+			#{c.groupImCount}, #{c.onpostDuration}, #{c.mileage}, #{c.tmpGroupCount},#{c.tmpGroupFileCount}, #{c.updateTime}, #{c.state}, #{c.individualTalkDuration}, #{c.groupTalkDuration}, #{c.videoDuration})
+		</foreach>
+	</insert>
+	<!--=@@@@@@============================= 自定义内容 结束 _@CAUTION_SELF_FINISH@_ =============================@@@@@@=-->
+
+
+	<!--====================================== 查询开始-SELECT_BEGIN ======================================-->
+	<select id="load" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaDayUser">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaDayUser">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaDayUser">
+		SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> LIMIT 0,1
+	</select>
+
+	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaDayUser">
+		SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> <include refid="limitCount"/>
+	</select>
+
+	<select id="selectCountByCondition" parameterType="java.util.Map" resultType="long">
+		SELECT COUNT(*) FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where>
+	</select>
+	<!--====================================== 查询结束-SELECT_FINISH ======================================-->
+
+	<!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
+	<!-- <-#-if cMap_has_next>,</-#-if> -->
+	<update id="updateByPrimaryKey" parameterType="com.zom.statistics.dao.po.StaDayUser">
+		UPDATE <include refid="table"/>
+		<set>unique_id = #{uniqueId,jdbcType=VARCHAR},corpid = #{corpid,jdbcType=INTEGER},uid = #{uid,jdbcType=BIGINT},name = #{name,jdbcType=VARCHAR},time_ymd = #{timeYmd,jdbcType=INTEGER},dept_unique_id = #{deptUniqueId,jdbcType=VARCHAR},dept_name = #{deptName,jdbcType=VARCHAR},online_duration = #{onlineDuration,jdbcType=BIGINT},logon_time = #{logonTime,jdbcType=TIMESTAMP},talk_count = #{talkCount,jdbcType=INTEGER},individual_talk_count = #{individualTalkCount,jdbcType=INTEGER},group_talk_count = #{groupTalkCount,jdbcType=INTEGER},talk_duration = #{talkDuration,jdbcType=INTEGER},individual_talk_duration = #{individualTalkDuration,jdbcType=INTEGER},group_talk_duration = #{groupTalkDuration,jdbcType=INTEGER},video_all_count = #{videoAllCount,jdbcType=INTEGER},video_call_count = #{videoCallCount,jdbcType=INTEGER},video_upload_count = #{videoUploadCount,jdbcType=INTEGER},video_rollcall_count = #{videoRollcallCount,jdbcType=INTEGER},video_conf_count = #{videoConfCount,jdbcType=INTEGER},video_duration = #{videoDuration,jdbcType=INTEGER},sos_count = #{sosCount,jdbcType=INTEGER},photo_upload_count = #{photoUploadCount,jdbcType=INTEGER},im_count = #{imCount,jdbcType=INTEGER},individual_im_count = #{individualImCount,jdbcType=INTEGER},group_im_count = #{groupImCount,jdbcType=INTEGER},onpost_duration = #{onpostDuration,jdbcType=INTEGER},mileage = #{mileage,jdbcType=INTEGER},tmp_group_count = #{tmpGroupCount,jdbcType=INTEGER},tmp_group_file_count = #{tmpGroupFileCount,jdbcType=INTEGER},state = #{state,jdbcType=INTEGER},update_time = #{updateTime,jdbcType=TIMESTAMP},</set>
+		WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.zom.statistics.dao.po.StaDayUser">
+		UPDATE <include refid="table"/>
+		<set><if test="uniqueId != null">unique_id = #{uniqueId,jdbcType=VARCHAR},</if><if test="corpid != null">corpid = #{corpid,jdbcType=INTEGER},</if><if test="uid != null">uid = #{uid,jdbcType=BIGINT},</if><if test="name != null">name = #{name,jdbcType=VARCHAR},</if><if test="timeYmd != null">time_ymd = #{timeYmd,jdbcType=INTEGER},</if><if test="deptUniqueId != null">dept_unique_id = #{deptUniqueId,jdbcType=VARCHAR},</if><if test="deptName != null">dept_name = #{deptName,jdbcType=VARCHAR},</if><if test="onlineDuration != null">online_duration = #{onlineDuration,jdbcType=BIGINT},</if><if test="logonTime != null">logon_time = #{logonTime,jdbcType=TIMESTAMP},</if><if test="talkCount != null">talk_count = #{talkCount,jdbcType=INTEGER},</if><if test="individualTalkCount != null">individual_talk_count = #{individualTalkCount,jdbcType=INTEGER},</if><if test="groupTalkCount != null">group_talk_count = #{groupTalkCount,jdbcType=INTEGER},</if><if test="talkDuration != null">talk_duration = #{talkDuration,jdbcType=INTEGER},</if><if test="individualTalkDuration != null">individual_talk_duration = #{individualTalkDuration,jdbcType=INTEGER},</if><if test="groupTalkDuration != null">group_talk_duration = #{groupTalkDuration,jdbcType=INTEGER},</if><if test="videoAllCount != null">video_all_count = #{videoAllCount,jdbcType=INTEGER},</if><if test="videoCallCount != null">video_call_count = #{videoCallCount,jdbcType=INTEGER},</if><if test="videoUploadCount != null">video_upload_count = #{videoUploadCount,jdbcType=INTEGER},</if><if test="videoRollcallCount != null">video_rollcall_count = #{videoRollcallCount,jdbcType=INTEGER},</if><if test="videoConfCount != null">video_conf_count = #{videoConfCount,jdbcType=INTEGER},</if><if test="videoDuration != null">video_duration = #{videoDuration,jdbcType=INTEGER},</if><if test="sosCount != null">sos_count = #{sosCount,jdbcType=INTEGER},</if><if test="photoUploadCount != null">photo_upload_count = #{photoUploadCount,jdbcType=INTEGER},</if><if test="imCount != null">im_count = #{imCount,jdbcType=INTEGER},</if><if test="individualImCount != null">individual_im_count = #{individualImCount,jdbcType=INTEGER},</if><if test="groupImCount != null">group_im_count = #{groupImCount,jdbcType=INTEGER},</if><if test="onpostDuration != null">onpost_duration = #{onpostDuration,jdbcType=INTEGER},</if><if test="mileage != null">mileage = #{mileage,jdbcType=INTEGER},</if><if test="tmpGroupCount != null">tmp_group_count = #{tmpGroupCount,jdbcType=INTEGER},</if><if test="tmpGroupFileCount != null">tmp_group_file_count = #{tmpGroupFileCount,jdbcType=INTEGER},</if><if test="state != null">state = #{state,jdbcType=INTEGER},</if><if test="updateTime != null">update_time = #{updateTime,jdbcType=TIMESTAMP},</if></set>
+		WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+    <!--====================================== 修改结束-UPDATE_FINISH ======================================-->
+
+	<!--====================================== 新增开始-INSERT_BEGIN ======================================-->
+	<insert id="insert" parameterType="com.zom.statistics.dao.po.StaDayUser" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO <include refid="table"/>(unique_id,corpid,uid,name,time_ymd,dept_unique_id,dept_name,online_duration,logon_time,talk_count,individual_talk_count,group_talk_count,talk_duration,individual_talk_duration,group_talk_duration,video_all_count,video_call_count,video_upload_count,video_rollcall_count,video_conf_count,video_duration,sos_count,photo_upload_count,im_count,individual_im_count,group_im_count,onpost_duration,mileage,tmp_group_count,tmp_group_file_count,state,update_time)
+		VALUES( #{uniqueId,jdbcType=VARCHAR},#{corpid,jdbcType=INTEGER},#{uid,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{timeYmd,jdbcType=INTEGER},#{deptUniqueId,jdbcType=VARCHAR},#{deptName,jdbcType=VARCHAR},#{onlineDuration,jdbcType=BIGINT},#{logonTime,jdbcType=TIMESTAMP},#{talkCount,jdbcType=INTEGER},#{individualTalkCount,jdbcType=INTEGER},#{groupTalkCount,jdbcType=INTEGER},#{talkDuration,jdbcType=INTEGER},#{individualTalkDuration,jdbcType=INTEGER},#{groupTalkDuration,jdbcType=INTEGER},#{videoAllCount,jdbcType=INTEGER},#{videoCallCount,jdbcType=INTEGER},#{videoUploadCount,jdbcType=INTEGER},#{videoRollcallCount,jdbcType=INTEGER},#{videoConfCount,jdbcType=INTEGER},#{videoDuration,jdbcType=INTEGER},#{sosCount,jdbcType=INTEGER},#{photoUploadCount,jdbcType=INTEGER},#{imCount,jdbcType=INTEGER},#{individualImCount,jdbcType=INTEGER},#{groupImCount,jdbcType=INTEGER},#{onpostDuration,jdbcType=INTEGER},#{mileage,jdbcType=INTEGER},#{tmpGroupCount,jdbcType=INTEGER},#{tmpGroupFileCount,jdbcType=INTEGER},#{state,jdbcType=INTEGER},#{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.zom.statistics.dao.po.StaDayUser" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO <include refid="table"/>
+		<trim prefix="(" suffix=")" suffixOverrides=","> <if test="uniqueId != null"> unique_id,</if><if test="corpid != null"> corpid,</if><if test="uid != null"> uid,</if><if test="name != null"> name,</if><if test="timeYmd != null"> time_ymd,</if><if test="deptUniqueId != null"> dept_unique_id,</if><if test="deptName != null"> dept_name,</if><if test="onlineDuration != null"> online_duration,</if><if test="logonTime != null"> logon_time,</if><if test="talkCount != null"> talk_count,</if><if test="individualTalkCount != null"> individual_talk_count,</if><if test="groupTalkCount != null"> group_talk_count,</if><if test="talkDuration != null"> talk_duration,</if><if test="individualTalkDuration != null"> individual_talk_duration,</if><if test="groupTalkDuration != null"> group_talk_duration,</if><if test="videoAllCount != null"> video_all_count,</if><if test="videoCallCount != null"> video_call_count,</if><if test="videoUploadCount != null"> video_upload_count,</if><if test="videoRollcallCount != null"> video_rollcall_count,</if><if test="videoConfCount != null"> video_conf_count,</if><if test="videoDuration != null"> video_duration,</if><if test="sosCount != null"> sos_count,</if><if test="photoUploadCount != null"> photo_upload_count,</if><if test="imCount != null"> im_count,</if><if test="individualImCount != null"> individual_im_count,</if><if test="groupImCount != null"> group_im_count,</if><if test="onpostDuration != null"> onpost_duration,</if><if test="mileage != null"> mileage,</if><if test="tmpGroupCount != null"> tmp_group_count,</if><if test="tmpGroupFileCount != null"> tmp_group_file_count,</if><if test="state != null"> state,</if><if test="updateTime != null"> update_time,</if></trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=","><if test="uniqueId != null">#{uniqueId,jdbcType=VARCHAR},</if><if test="corpid != null">#{corpid,jdbcType=INTEGER},</if><if test="uid != null">#{uid,jdbcType=BIGINT},</if><if test="name != null">#{name,jdbcType=VARCHAR},</if><if test="timeYmd != null">#{timeYmd,jdbcType=INTEGER},</if><if test="deptUniqueId != null">#{deptUniqueId,jdbcType=VARCHAR},</if><if test="deptName != null">#{deptName,jdbcType=VARCHAR},</if><if test="onlineDuration != null">#{onlineDuration,jdbcType=BIGINT},</if><if test="logonTime != null">#{logonTime,jdbcType=TIMESTAMP},</if><if test="talkCount != null">#{talkCount,jdbcType=INTEGER},</if><if test="individualTalkCount != null">#{individualTalkCount,jdbcType=INTEGER},</if><if test="groupTalkCount != null">#{groupTalkCount,jdbcType=INTEGER},</if><if test="talkDuration != null">#{talkDuration,jdbcType=INTEGER},</if><if test="individualTalkDuration != null">#{individualTalkDuration,jdbcType=INTEGER},</if><if test="groupTalkDuration != null">#{groupTalkDuration,jdbcType=INTEGER},</if><if test="videoAllCount != null">#{videoAllCount,jdbcType=INTEGER},</if><if test="videoCallCount != null">#{videoCallCount,jdbcType=INTEGER},</if><if test="videoUploadCount != null">#{videoUploadCount,jdbcType=INTEGER},</if><if test="videoRollcallCount != null">#{videoRollcallCount,jdbcType=INTEGER},</if><if test="videoConfCount != null">#{videoConfCount,jdbcType=INTEGER},</if><if test="videoDuration != null">#{videoDuration,jdbcType=INTEGER},</if><if test="sosCount != null">#{sosCount,jdbcType=INTEGER},</if><if test="photoUploadCount != null">#{photoUploadCount,jdbcType=INTEGER},</if><if test="imCount != null">#{imCount,jdbcType=INTEGER},</if><if test="individualImCount != null">#{individualImCount,jdbcType=INTEGER},</if><if test="groupImCount != null">#{groupImCount,jdbcType=INTEGER},</if><if test="onpostDuration != null">#{onpostDuration,jdbcType=INTEGER},</if><if test="mileage != null">#{mileage,jdbcType=INTEGER},</if><if test="tmpGroupCount != null">#{tmpGroupCount,jdbcType=INTEGER},</if><if test="tmpGroupFileCount != null">#{tmpGroupFileCount,jdbcType=INTEGER},</if><if test="state != null">#{state,jdbcType=INTEGER},</if><if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if></trim>
+	</insert>
+
+	<insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO <include refid="table"/>(unique_id,corpid,uid,name,time_ymd,dept_unique_id,dept_name,online_duration,logon_time,talk_count,individual_talk_count,group_talk_count,talk_duration,individual_talk_duration,group_talk_duration,video_all_count,video_call_count,video_upload_count,video_rollcall_count,video_conf_count,video_duration,sos_count,photo_upload_count,im_count,individual_im_count,group_im_count,onpost_duration,mileage,tmp_group_count,tmp_group_file_count,state,update_time)
+		VALUES <foreach collection="list" item="c" separator=",">(#{c.uniqueId,jdbcType=VARCHAR},#{c.corpid,jdbcType=INTEGER},#{c.uid,jdbcType=BIGINT},#{c.name,jdbcType=VARCHAR},#{c.timeYmd,jdbcType=INTEGER},#{c.deptUniqueId,jdbcType=VARCHAR},#{c.deptName,jdbcType=VARCHAR},#{c.onlineDuration,jdbcType=BIGINT},#{c.logonTime,jdbcType=TIMESTAMP},#{c.talkCount,jdbcType=INTEGER},#{c.individualTalkCount,jdbcType=INTEGER},#{c.groupTalkCount,jdbcType=INTEGER},#{c.talkDuration,jdbcType=INTEGER},#{c.individualTalkDuration,jdbcType=INTEGER},#{c.groupTalkDuration,jdbcType=INTEGER},#{c.videoAllCount,jdbcType=INTEGER},#{c.videoCallCount,jdbcType=INTEGER},#{c.videoUploadCount,jdbcType=INTEGER},#{c.videoRollcallCount,jdbcType=INTEGER},#{c.videoConfCount,jdbcType=INTEGER},#{c.videoDuration,jdbcType=INTEGER},#{c.sosCount,jdbcType=INTEGER},#{c.photoUploadCount,jdbcType=INTEGER},#{c.imCount,jdbcType=INTEGER},#{c.individualImCount,jdbcType=INTEGER},#{c.groupImCount,jdbcType=INTEGER},#{c.onpostDuration,jdbcType=INTEGER},#{c.mileage,jdbcType=INTEGER},#{c.tmpGroupCount,jdbcType=INTEGER},#{c.tmpGroupFileCount,jdbcType=INTEGER},#{c.state,jdbcType=INTEGER},#{c.updateTime,jdbcType=TIMESTAMP})</foreach>
+	</insert>
+  	<!--====================================== 新增结束-INSERT_FINISH ======================================-->
+
+	<!--====================================== 删除开始-DELETE_BEGIN ======================================-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	    DELETE FROM <include refid="table"/> WHERE id = #{id,jdbcType=BIGINT}
+	</delete>
+	<!--====================================== 删除结束-DELETE_FINISH ======================================-->
+
+</mapper>

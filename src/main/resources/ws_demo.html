@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>统计项目Websocket demo</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+    <meta http-equiv="Origin" content="http://localhost:8080"/>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/sockjs-client/1.4.0/sockjs.min.js"></script>
+    <script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="ws_demo.js"></script>
+</head>
+<body>
+<noscript>
+    <h2 style="color: #ff0000">
+        Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+        enabled. Please enable Javascript and reload this page!
+    </h2>
+</noscript>
+<div id="main-content" class="container">
+    <div class="row"><h3>请将此页面放到本地的应用服务器下，并将ws_demo.js中URL修改为正确的IP</h3></div>
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="connect">WebSocket connection:</label>
+                    <button id="connect" class="btn btn-default" type="submit">连接</button>
+                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">断开
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group" style="margin: 10px 0px;">
+                    <label for="content">触发通知：</label>
+                    <input type="text" id="content" class="form-control" placeholder="通知内容...">
+                    <button id="send" class="btn btn-default" type="submit" disabled="disabled">发送</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table id="conversation" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>内容</th>
+                </tr>
+                </thead>
+                <tbody id="content_container">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

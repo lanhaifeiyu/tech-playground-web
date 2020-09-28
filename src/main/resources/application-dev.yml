@@ -1,0 +1,77 @@
+custom:
+    support_sta: true
+    #ws_client_url: "ws://localhost:6001"
+    ws_client_url: "ws://47.93.118.250:6001"
+server:
+    port: 80
+    servlet:
+        context-path: /sta
+mybatis:
+    configuration:
+        map-underscore-to-camel-case: true
+        log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+    type-aliases-package: com.zom.statistics.dao.po
+    mapper-locations: classpath:mapper/*/*.xml		# mapper映射文件
+spring:
+    application:
+        name: zom-www-statistics
+    datasource:
+        druid:
+            name: zom-www-statistics
+            url: jdbc:mysql://localhost/rtvitrunk?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+            username: itrunk
+            password: "!VDDdd357!"
+            driver-class-name: com.mysql.cj.jdbc.Driver
+            filters: stat
+            #最大并发连接数
+            max-active: 20
+            #初始化连接数量
+            initial-size: 1
+            #配置获取连接等待超时的时间
+            max-wait: 1000
+            #最小空闲连接数
+            min-idle: 10
+            #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+            time-between-eviction-runs-millis: 60000
+            #配置一个连接在池中最小生存的时间，单位是毫秒
+            min-evictable-idle-time-millis: 300000
+            validation-query: SELECT 'X'
+            test-while-idle: true
+            test-on-borrow: false
+            test-on-return: false
+            max-open-prepared-statements: 20
+            #打开removeAbandoned功能 WARN : removeAbandoned is true, not use in production
+            remove-abandoned: false
+            #1800秒，也就是30分钟
+            remove-abandoned-timeout: 1800
+            #关闭abanded连接时输出错误日志
+            log-abandoned: true
+    mvc:
+        throw-exception-if-no-handler-found: true
+        view:
+            prefix: /
+            suffix: .html
+    resources:
+        add-mappings: false
+    cache:
+        type: JCACHE
+        ehcache:
+            config: classpath:ehcache.xml
+        cache-names: staUserCache,staDeptParentUniqueIds,staUser,staGroup
+
+    redis:
+        client-name: zom-www-statistics
+        database: 1
+        host: 172.81.216.81
+        port: 6379
+        password: vfr47ujm
+        jedis:
+            pool:
+                min-idle: 0
+                max-idle: 8
+                max-wait: 1ms
+logging:
+  level:
+      springfox:
+          documentation: WARN
+

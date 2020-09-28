@@ -1,0 +1,104 @@
+.ivu-layout-sider-trigger{
+  background:#929399;
+}
+/*表格抬头颜色*/
+.ivu-table th {
+  background-color: #929399;
+}
+
+/*表格内部颜色*/
+.ivu-table td {
+  background-color: #cacbd4;
+
+}
+.ivu-breadcrumb a {
+  color: white;
+}
+
+/*基础按钮颜色*/
+.ivu-btn-primary {
+  background-color: #4e4e4e;
+  border-color: white;
+}
+
+
+/*下拉框颜色*/
+.ivu-select-dropdown{
+  background: #e3e3e3;
+  color: #6c6c6c;
+}
+
+/* 标签颜色（屏蔽部门处）*/
+.ivu-tag {
+  background: #e3e3e3;
+  border: none;
+}
+
+/* 标签文字颜色*/
+.ivu-tag-text {
+  color: #6c6c6c;
+}
+
+/* 单选框的颜色*/
+.ivu-select-selection {
+  border: none;
+  color:#6c6c6c;
+  background: #e3e3e3;
+}
+
+/* 页面切换按钮颜色*/
+.ivu-page-next, .ivu-page-prev {
+  background-color: transparent;
+}
+
+/* 时间输入框的颜色*/
+.ivu-input {
+  border: 1px solid #ebedf5;
+  color:#6c6c6c;
+  background: #e3e3e3;}
+
+/* 单选按钮（图表类型切换）颜色*/
+.ivu-radio-group-button .ivu-radio-wrapper{
+  background:#e3e3e3;
+}
+
+
+
+.ivu-page-simple .ivu-page-simple-pager input{
+  color:#6c6c6c;
+  background-color:#e3e3e3;
+}
+
+/*树表选择颜色*/
+.ivu-tree-title-selected, .ivu-tree-title-selected:hover {
+  background-color: #a8a8a8;
+}
+
+/*tree鼠标悬停*/
+.ivu-tree-title:hover{background-color: #909090
+}
+
+/*按钮悬停颜色*/
+.ivu-btn:hover{background: #909090;color: white;
+}
+
+/*树表文字颜色*/
+.ivu-tree-title {
+  color: white;
+}
+
+/*checkbox的颜色*/
+.ivu-checkbox-checked .ivu-checkbox-inner {
+  border-color:#4e4e4e;
+  background-color: #4e4e4e;
+}
+/*菜单选中底色*/
+.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu) {
+  color: white;
+  background: #b8b9c1;
+}
+
+/*菜单选中的小横条颜色*/
+.ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu):after {
+  background: #42464e;
+}

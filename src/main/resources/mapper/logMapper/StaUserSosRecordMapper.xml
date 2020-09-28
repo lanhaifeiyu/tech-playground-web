@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zom.statistics.dao.mapper.logMapper.StaUserSosRecordMapper">
+
+	<!-- @author yuronghua-airson @template 2019.08.02 v11.0 @organization Zero One More, Inc. http://www.01more.com @time 2020-02-27 09:57:44 -->
+
+	<!--====================================== 设置开始-CONFIG_BEGIN ======================================-->
+	<sql id="table">sta_user_sos_record</sql>
+	<!-- 所有基础字段 -->
+	<sql id="baseColumns">A.id AS id,A.corpid AS corpid,A.uid AS uid,A.name AS name,A.time_ym AS timeYm,A.time_ymd AS timeYmd,A.time_ymdh AS timeYmdh,A.dept_unique_id AS deptUniqueId,A.dept_name AS deptName,A.start_time AS startTime,A.end_time AS endTime,A.handle_time AS handleTime,A.handle_uid AS handleUid,A.handle_name AS handleName,A.location AS location,A.marker AS marker,A.session AS session,A.sos_state AS sosState,A.state AS state</sql>
+	<!-- 分组  -->
+	<sql id="groupBy">
+		<if test="groupBy != null and groupBy !='' "> GROUP BY ${groupBy,jdbcType=VARCHAR} </if>
+	</sql>
+	<!-- 排序  -->
+	<sql id="orderBy">
+		<if test="orderBy != null and orderBy !='' ">
+			<if test="selfOrder == null">ORDER BY A.${orderBy}</if>
+			<if test="selfOrder != null">ORDER BY ${orderBy}</if>
+		</if>
+		<if test="ascOrDesc != null and ascOrDesc !='' and selfOrder == null "> ${ascOrDesc}</if>
+		<if test="orderBy == null and ascOrDesc == null "> ORDER BY A.id DESC</if>
+	</sql>
+	<!-- 分页 -->
+	<sql id="limitCount">
+		<if test="count != null and count !='' "> LIMIT ${start},${count}</if>
+	</sql>
+	<!--====================================== 设置结束-CONFIG_FINISH ======================================-->
+
+
+	<!--=@@@@@@============================= 自定义内容 开始 _@CAUTION_SELF_BEGIN@_ =============================@@@@@@=-->
+	<sql id="joinColumns"></sql>
+	<sql id="baseSearch"></sql>
+	<sql id="joinSearch"></sql>
+	<sql id="leftJoin"></sql>
+
+	<select id="selectOngoingList" resultType="com.zom.statistics.dao.po.StaUserSosRecord">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.sos_state = 1
+	</select>
+
+	<select id="selectListToSum" resultType="com.zom.statistics.dao.po.StaUserSosRecord">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id > #{lastPkId} ORDER BY A.id ASC LIMIT #{count}
+	</select>
+
+	<update id="updateStateEnd" parameterType="com.zom.statistics.dao.po.StaUserSosRecord">
+		UPDATE <include refid="table"/> SET sos_state = #{sosState},end_time = #{endTime,jdbcType=TIMESTAMP} WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateStateHandle" parameterType="com.zom.statistics.dao.po.StaUserSosRecord">
+		UPDATE <include refid="table"/> SET sos_state = 3,end_time = #{endTime,jdbcType=TIMESTAMP},handle_time = #{handleTime,jdbcType=TIMESTAMP},handle_uid = #{handleUid,jdbcType=BIGINT},handle_name = #{handleName,jdbcType=VARCHAR} WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateStateEndBeforeLogonOff">
+		UPDATE <include refid="table"/> SET sos_state = 2, end_time = #{endTime} WHERE uid = #{uid,jdbcType=BIGINT} AND end_flag >= 3 AND start_time &lt; #{endTime,jdbcType=TIMESTAMP}
+	</update>
+
+	<!-- old below -->
+
+	<select id="selectByState" resultType="com.zom.statistics.dao.po.StaUserSosRecord">
+		select id, corpid, uid, name, time_ym, time_ymd, time_ymdh, dept_unique_id, dept_name, start_time, end_time, handle_time, handle_uid, handle_name,
+			   location, marker, sos_state, `session`, state from sta_user_sos_record where sos_state = #{state}
+	</select>
+
+	<select id="selectMsgByUidsAndDate" resultType="com.zom.statistics.dao.po.StaUserSosRecord">
+		select id, corpid, uid, start_time, end_time, handle_time, handle_uid, handle_name, location, marker, sos_state, state from sta_user_sos_record
+		<where>
+			<if test="uids != null and uids != ''">
+				id in (#{uids})
+			</if>
+			<if test="date != null and date != ''">
+				and time_ymd = #{date}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectByLastId" resultType="com.zom.statistics.dao.po.StaUserSosRecord">
+		select id, corpid, uid, name, time_ym, time_ymd, time_ymdh, dept_unique_id, dept_name, start_time, end_time, handle_time, handle_uid, handle_name, location, marker, sos_state, `session`, state from sta_user_sos_record where id > #{id} limit 2000
+	</select>
+
+	<insert id="insertList">
+		insert into sta_user_sos_record (corpid, uid, `name`, time_ym, time_ymd, time_ymdh, dept_unique_id, dept_name, start_time, end_time, handle_time, handle_uid, handle_name, location, marker, sos_state, session, state) values
+		<foreach collection="list" item="c" separator=",">
+			(#{c.corpid}, #{c.uid}, #{c.name}, #{c.timeYm}, #{c.timeYmd}, #{c.timeYmdh}, #{c.deptUniqueId}, #{c.deptName}, #{c.startTime}, #{c.endTime}, #{c.handleTime}, #{c.handleUid}, #{c.handleName}, #{c.location}, #{c.marker}, #{c.sosState}, #{c.session}, #{c.state})
+		</foreach>
+	</insert>
+	<!--=@@@@@@============================= 自定义内容 结束 _@CAUTION_SELF_FINISH@_ =============================@@@@@@=-->
+
+
+	<!--====================================== 查询开始-SELECT_BEGIN ======================================-->
+	<select id="load" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaUserSosRecord">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaUserSosRecord">
+		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaUserSosRecord">
+		SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> LIMIT 0,1
+	</select>
+
+	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaUserSosRecord">
+		SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> <include refid="limitCount"/>
+	</select>
+
+	<select id="selectCountByCondition" parameterType="java.util.Map" resultType="long">
+		SELECT COUNT(*) FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where>
+	</select>
+	<!--====================================== 查询结束-SELECT_FINISH ======================================-->
+
+	<!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
+	<!-- <-#-if cMap_has_next>,</-#-if> -->
+	<update id="updateByPrimaryKey" parameterType="com.zom.statistics.dao.po.StaUserSosRecord">
+		UPDATE <include refid="table"/>
+		<set>corpid = #{corpid,jdbcType=INTEGER},uid = #{uid,jdbcType=BIGINT},name = #{name,jdbcType=VARCHAR},time_ym = #{timeYm,jdbcType=INTEGER},time_ymd = #{timeYmd,jdbcType=INTEGER},time_ymdh = #{timeYmdh,jdbcType=INTEGER},dept_unique_id = #{deptUniqueId,jdbcType=VARCHAR},dept_name = #{deptName,jdbcType=VARCHAR},start_time = #{startTime,jdbcType=TIMESTAMP},end_time = #{endTime,jdbcType=TIMESTAMP},handle_time = #{handleTime,jdbcType=TIMESTAMP},handle_uid = #{handleUid,jdbcType=BIGINT},handle_name = #{handleName,jdbcType=VARCHAR},location = #{location,jdbcType=VARCHAR},marker = #{marker,jdbcType=VARCHAR},session = #{session,jdbcType=VARCHAR},sos_state = #{sosState,jdbcType=INTEGER},state = #{state,jdbcType=INTEGER},</set>
+		WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.zom.statistics.dao.po.StaUserSosRecord">
+		UPDATE <include refid="table"/>
+		<set><if test="corpid != null">corpid = #{corpid,jdbcType=INTEGER},</if><if test="uid != null">uid = #{uid,jdbcType=BIGINT},</if><if test="name != null">name = #{name,jdbcType=VARCHAR},</if><if test="timeYm != null">time_ym = #{timeYm,jdbcType=INTEGER},</if><if test="timeYmd != null">time_ymd = #{timeYmd,jdbcType=INTEGER},</if><if test="timeYmdh != null">time_ymdh = #{timeYmdh,jdbcType=INTEGER},</if><if test="deptUniqueId != null">dept_unique_id = #{deptUniqueId,jdbcType=VARCHAR},</if><if test="deptName != null">dept_name = #{deptName,jdbcType=VARCHAR},</if><if test="startTime != null">start_time = #{startTime,jdbcType=TIMESTAMP},</if><if test="endTime != null">end_time = #{endTime,jdbcType=TIMESTAMP},</if><if test="handleTime != null">handle_time = #{handleTime,jdbcType=TIMESTAMP},</if><if test="handleUid != null">handle_uid = #{handleUid,jdbcType=BIGINT},</if><if test="handleName != null">handle_name = #{handleName,jdbcType=VARCHAR},</if><if test="location != null">location = #{location,jdbcType=VARCHAR},</if><if test="marker != null">marker = #{marker,jdbcType=VARCHAR},</if><if test="session != null">session = #{session,jdbcType=VARCHAR},</if><if test="sosState != null">sos_state = #{sosState,jdbcType=INTEGER},</if><if test="state != null">state = #{state,jdbcType=INTEGER},</if></set>
+		WHERE id = #{id,jdbcType=BIGINT}
+	</update>
+	<!--====================================== 修改结束-UPDATE_FINISH ======================================-->
+
+	<!--====================================== 新增开始-INSERT_BEGIN ======================================-->
+	<insert id="insert" parameterType="com.zom.statistics.dao.po.StaUserSosRecord" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO <include refid="table"/>(corpid,uid,name,time_ym,time_ymd,time_ymdh,dept_unique_id,dept_name,start_time,end_time,handle_time,handle_uid,handle_name,location,marker,session,sos_state,state)
+		VALUES( #{corpid,jdbcType=INTEGER},#{uid,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{timeYm,jdbcType=INTEGER},#{timeYmd,jdbcType=INTEGER},#{timeYmdh,jdbcType=INTEGER},#{deptUniqueId,jdbcType=VARCHAR},#{deptName,jdbcType=VARCHAR},#{startTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},#{handleTime,jdbcType=TIMESTAMP},#{handleUid,jdbcType=BIGINT},#{handleName,jdbcType=VARCHAR},#{location,jdbcType=VARCHAR},#{marker,jdbcType=VARCHAR},#{session,jdbcType=VARCHAR},#{sosState,jdbcType=INTEGER},#{state,jdbcType=INTEGER})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.zom.statistics.dao.po.StaUserSosRecord" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO <include refid="table"/>
+		<trim prefix="(" suffix=")" suffixOverrides=","> <if test="corpid != null"> corpid,</if><if test="uid != null"> uid,</if><if test="name != null"> name,</if><if test="timeYm != null"> time_ym,</if><if test="timeYmd != null"> time_ymd,</if><if test="timeYmdh != null"> time_ymdh,</if><if test="deptUniqueId != null"> dept_unique_id,</if><if test="deptName != null"> dept_name,</if><if test="startTime != null"> start_time,</if><if test="endTime != null"> end_time,</if><if test="handleTime != null"> handle_time,</if><if test="handleUid != null"> handle_uid,</if><if test="handleName != null"> handle_name,</if><if test="location != null"> location,</if><if test="marker != null"> marker,</if><if test="session != null"> session,</if><if test="sosState != null"> sos_state,</if><if test="state != null"> state,</if></trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=","><if test="corpid != null">#{corpid,jdbcType=INTEGER},</if><if test="uid != null">#{uid,jdbcType=BIGINT},</if><if test="name != null">#{name,jdbcType=VARCHAR},</if><if test="timeYm != null">#{timeYm,jdbcType=INTEGER},</if><if test="timeYmd != null">#{timeYmd,jdbcType=INTEGER},</if><if test="timeYmdh != null">#{timeYmdh,jdbcType=INTEGER},</if><if test="deptUniqueId != null">#{deptUniqueId,jdbcType=VARCHAR},</if><if test="deptName != null">#{deptName,jdbcType=VARCHAR},</if><if test="startTime != null">#{startTime,jdbcType=TIMESTAMP},</if><if test="endTime != null">#{endTime,jdbcType=TIMESTAMP},</if><if test="handleTime != null">#{handleTime,jdbcType=TIMESTAMP},</if><if test="handleUid != null">#{handleUid,jdbcType=BIGINT},</if><if test="handleName != null">#{handleName,jdbcType=VARCHAR},</if><if test="location != null">#{location,jdbcType=VARCHAR},</if><if test="marker != null">#{marker,jdbcType=VARCHAR},</if><if test="session != null">#{session,jdbcType=VARCHAR},</if><if test="sosState != null">#{sosState,jdbcType=INTEGER},</if><if test="state != null">#{state,jdbcType=INTEGER},</if></trim>
+	</insert>
+
+	<insert id="insertBatch" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO <include refid="table"/>(corpid,uid,name,time_ym,time_ymd,time_ymdh,dept_unique_id,dept_name,start_time,end_time,handle_time,handle_uid,handle_name,location,marker,session,sos_state,state)
+		VALUES <foreach collection="list" item="c" separator=",">(#{c.corpid,jdbcType=INTEGER},#{c.uid,jdbcType=BIGINT},#{c.name,jdbcType=VARCHAR},#{c.timeYm,jdbcType=INTEGER},#{c.timeYmd,jdbcType=INTEGER},#{c.timeYmdh,jdbcType=INTEGER},#{c.deptUniqueId,jdbcType=VARCHAR},#{c.deptName,jdbcType=VARCHAR},#{c.startTime,jdbcType=TIMESTAMP},#{c.endTime,jdbcType=TIMESTAMP},#{c.handleTime,jdbcType=TIMESTAMP},#{c.handleUid,jdbcType=BIGINT},#{c.handleName,jdbcType=VARCHAR},#{c.location,jdbcType=VARCHAR},#{c.marker,jdbcType=VARCHAR},#{c.session,jdbcType=VARCHAR},#{c.sosState,jdbcType=INTEGER},#{c.state,jdbcType=INTEGER})</foreach>
+	</insert>
+	<!--====================================== 新增结束-INSERT_FINISH ======================================-->
+
+	<!--====================================== 删除开始-DELETE_BEGIN ======================================-->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+	    DELETE FROM <include refid="table"/> WHERE id = #{id,jdbcType=BIGINT}
+	</delete>
+	<!--====================================== 删除结束-DELETE_FINISH ======================================-->
+
+</mapper>

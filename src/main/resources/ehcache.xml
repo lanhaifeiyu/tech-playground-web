@@ -1,0 +1,51 @@
+<ehcache:config xmlns:ehcache="http://www.ehcache.org/v3" xmlns:jcache="http://www.ehcache.org/v3/jsr107">
+
+    <!--
+    https://juejin.im/post/6844903813996871693
+    https://www.ehcache.org/documentation/3.8/
+    https://www.ehcache.org/documentation/3.8/xml.html
+    https://www.ehcache.org/documentation/3.8/examples.html#xml-with-107-extension
+    https://www.cnblogs.com/ejiyuan/p/11014765.html : cache-names
+    -->
+
+    <ehcache:cache alias="staUser">
+        <!-- Adds the key and value type configuration -->
+        <ehcache:key-type>java.lang.Long</ehcache:key-type>
+        <ehcache:value-type>java.lang.String</ehcache:value-type>
+        <ehcache:expiry>
+            <ehcache:tti unit="minutes">30</ehcache:tti>
+        </ehcache:expiry>
+        <ehcache:heap unit="entries">5000</ehcache:heap>
+    </ehcache:cache>
+
+    <ehcache:cache alias="staGroup">
+        <!-- Adds the key and value type configuration -->
+        <ehcache:key-type>java.lang.Long</ehcache:key-type>
+        <ehcache:value-type>java.lang.String</ehcache:value-type>
+        <ehcache:expiry>
+            <ehcache:tti unit="minutes">30</ehcache:tti>
+        </ehcache:expiry>
+        <ehcache:heap unit="entries">5000</ehcache:heap>
+    </ehcache:cache>
+
+    <ehcache:cache alias="staUserCache">
+        <!-- Adds the key and value type configuration -->
+        <ehcache:key-type>java.lang.Long</ehcache:key-type>
+        <ehcache:value-type>com.zom.statistics.model.UserCache</ehcache:value-type>
+        <ehcache:expiry>
+            <ehcache:tti unit="minutes">30</ehcache:tti>
+        </ehcache:expiry>
+        <ehcache:heap unit="entries">5000</ehcache:heap>
+    </ehcache:cache>
+
+    <ehcache:cache alias="staDeptParentUniqueIds">
+        <!-- Adds the key and value type configuration -->
+        <ehcache:key-type>java.lang.String</ehcache:key-type>
+        <ehcache:value-type>java.util.Map</ehcache:value-type>
+        <ehcache:expiry>
+            <ehcache:tti unit="minutes">30</ehcache:tti>
+        </ehcache:expiry>
+        <ehcache:heap unit="entries">5000</ehcache:heap>
+    </ehcache:cache>
+
+</ehcache:config>
