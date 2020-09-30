@@ -1,6 +1,6 @@
 package com.lhfeiyu.tech.config;
 
-import com.zom.statistics.handler.JwtInterceptor;
+import com.lhfeiyu.tech.handler.JwtInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

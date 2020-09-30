@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zom.statistics.dao.mapper.logMapper.StaUserImRecordMapper">
+<mapper namespace="com.lhfeiyu.tech.dao.mapper.logMapper.StaUserImRecordMapper">
 
 	<!-- @author yuronghua-airson @template 2019.08.02 v11.0 @organization Zero One More, Inc. http://www.01more.com @time 2020-02-27 09:57:44 -->
 
@@ -34,17 +34,17 @@
 	<sql id="joinSearch"></sql>
 	<sql id="leftJoin"></sql>
 
-	<select id="selectListToSum" resultType="com.zom.statistics.dao.po.StaUserImRecord">
+	<select id="selectListToSum" resultType="com.lhfeiyu.tech.dao.po.StaUserImRecord">
 		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id > #{lastPkId} ORDER BY A.id ASC LIMIT #{count}
 	</select>
 
 	<!-- old below -->
 
-	<select id="selectMsgByUidsAndDate" resultType="com.zom.statistics.dao.po.StaUserImRecord">
+	<select id="selectMsgByUidsAndDate" resultType="com.lhfeiyu.tech.dao.po.StaUserImRecord">
 		select id, corpid, uid, name, time_ym, time_ymd, time_ymdh, dept_unique_id, dept_name, target_id, target_name, type, im_type, start_time, end_time, end_flag from sta_user_im_record where id in (#{uids}) and time_ymd = #{date} order by id desc
 	</select>
 
-	<select id="selectByLastId" resultType="com.zom.statistics.dao.po.StaUserImRecord">
+	<select id="selectByLastId" resultType="com.lhfeiyu.tech.dao.po.StaUserImRecord">
 		select id, corpid, uid, name, time_ym, time_ymd, time_ymdh, dept_unique_id, dept_name, target_id, target_name, type, im_type, start_time, end_time, end_flag, `session`, state from sta_user_im_record where id > #{id} limit 2000
 	</select>
 
@@ -58,18 +58,18 @@
 
 
 	<!--====================================== 查询开始-SELECT_BEGIN ======================================-->
-	<select id="load" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaUserImRecord">
+	<select id="load" parameterType="java.lang.Long" resultType="com.lhfeiyu.tech.dao.po.StaUserImRecord">
 		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
 	</select>
-	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaUserImRecord">
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.lhfeiyu.tech.dao.po.StaUserImRecord">
 		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
 	</select>
 
-	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaUserImRecord">
+	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.tech.dao.po.StaUserImRecord">
     	SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> LIMIT 0,1
 	</select>
 
-	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaUserImRecord">
+	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.tech.dao.po.StaUserImRecord">
     	SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> <include refid="limitCount"/>
 	</select>
 
@@ -80,13 +80,13 @@
 
 	<!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
 	<!-- <-#-if cMap_has_next>,</-#-if> -->
-	<update id="updateByPrimaryKey" parameterType="com.zom.statistics.dao.po.StaUserImRecord">
+	<update id="updateByPrimaryKey" parameterType="com.lhfeiyu.tech.dao.po.StaUserImRecord">
 	    UPDATE <include refid="table"/>
 		<set>corpid = #{corpid,jdbcType=INTEGER},uid = #{uid,jdbcType=BIGINT},name = #{name,jdbcType=VARCHAR},time_ym = #{timeYm,jdbcType=INTEGER},time_ymd = #{timeYmd,jdbcType=INTEGER},time_ymdh = #{timeYmdh,jdbcType=INTEGER},dept_unique_id = #{deptUniqueId,jdbcType=VARCHAR},dept_name = #{deptName,jdbcType=VARCHAR},target_id = #{targetId,jdbcType=BIGINT},target_name = #{targetName,jdbcType=VARCHAR},type = #{type,jdbcType=INTEGER},im_type = #{imType,jdbcType=INTEGER},start_time = #{startTime,jdbcType=TIMESTAMP},end_time = #{endTime,jdbcType=TIMESTAMP},end_flag = #{endFlag,jdbcType=INTEGER},session = #{session,jdbcType=VARCHAR},state = #{state,jdbcType=INTEGER},</set>
 	    WHERE id = #{id,jdbcType=BIGINT}
 	</update>
 
-	<update id="updateByPrimaryKeySelective" parameterType="com.zom.statistics.dao.po.StaUserImRecord">
+	<update id="updateByPrimaryKeySelective" parameterType="com.lhfeiyu.tech.dao.po.StaUserImRecord">
 	    UPDATE <include refid="table"/>
 		<set><if test="corpid != null">corpid = #{corpid,jdbcType=INTEGER},</if><if test="uid != null">uid = #{uid,jdbcType=BIGINT},</if><if test="name != null">name = #{name,jdbcType=VARCHAR},</if><if test="timeYm != null">time_ym = #{timeYm,jdbcType=INTEGER},</if><if test="timeYmd != null">time_ymd = #{timeYmd,jdbcType=INTEGER},</if><if test="timeYmdh != null">time_ymdh = #{timeYmdh,jdbcType=INTEGER},</if><if test="deptUniqueId != null">dept_unique_id = #{deptUniqueId,jdbcType=VARCHAR},</if><if test="deptName != null">dept_name = #{deptName,jdbcType=VARCHAR},</if><if test="targetId != null">target_id = #{targetId,jdbcType=BIGINT},</if><if test="targetName != null">target_name = #{targetName,jdbcType=VARCHAR},</if><if test="type != null">type = #{type,jdbcType=INTEGER},</if><if test="imType != null">im_type = #{imType,jdbcType=INTEGER},</if><if test="startTime != null">start_time = #{startTime,jdbcType=TIMESTAMP},</if><if test="endTime != null">end_time = #{endTime,jdbcType=TIMESTAMP},</if><if test="endFlag != null">end_flag = #{endFlag,jdbcType=INTEGER},</if><if test="session != null">session = #{session,jdbcType=VARCHAR},</if><if test="state != null">state = #{state,jdbcType=INTEGER},</if></set>
 	    WHERE id = #{id,jdbcType=BIGINT}
@@ -94,12 +94,12 @@
     <!--====================================== 修改结束-UPDATE_FINISH ======================================-->
 
 	<!--====================================== 新增开始-INSERT_BEGIN ======================================-->
-	<insert id="insert" parameterType="com.zom.statistics.dao.po.StaUserImRecord" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insert" parameterType="com.lhfeiyu.tech.dao.po.StaUserImRecord" useGeneratedKeys="true" keyProperty="id">
 	    INSERT INTO <include refid="table"/>(corpid,uid,name,time_ym,time_ymd,time_ymdh,dept_unique_id,dept_name,target_id,target_name,type,im_type,start_time,end_time,end_flag,session,state)
 	    VALUES( #{corpid,jdbcType=INTEGER},#{uid,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{timeYm,jdbcType=INTEGER},#{timeYmd,jdbcType=INTEGER},#{timeYmdh,jdbcType=INTEGER},#{deptUniqueId,jdbcType=VARCHAR},#{deptName,jdbcType=VARCHAR},#{targetId,jdbcType=BIGINT},#{targetName,jdbcType=VARCHAR},#{type,jdbcType=INTEGER},#{imType,jdbcType=INTEGER},#{startTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},#{endFlag,jdbcType=INTEGER},#{session,jdbcType=VARCHAR},#{state,jdbcType=INTEGER})
 	</insert>
 
-	<insert id="insertSelective" parameterType="com.zom.statistics.dao.po.StaUserImRecord" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertSelective" parameterType="com.lhfeiyu.tech.dao.po.StaUserImRecord" useGeneratedKeys="true" keyProperty="id">
 	    INSERT INTO <include refid="table"/>
 		<trim prefix="(" suffix=")" suffixOverrides=","> <if test="corpid != null"> corpid,</if><if test="uid != null"> uid,</if><if test="name != null"> name,</if><if test="timeYm != null"> time_ym,</if><if test="timeYmd != null"> time_ymd,</if><if test="timeYmdh != null"> time_ymdh,</if><if test="deptUniqueId != null"> dept_unique_id,</if><if test="deptName != null"> dept_name,</if><if test="targetId != null"> target_id,</if><if test="targetName != null"> target_name,</if><if test="type != null"> type,</if><if test="imType != null"> im_type,</if><if test="startTime != null"> start_time,</if><if test="endTime != null"> end_time,</if><if test="endFlag != null"> endFlag,</if><if test="session != null"> session,</if><if test="state != null"> state,</if></trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=","><if test="corpid != null">#{corpid,jdbcType=INTEGER},</if><if test="uid != null">#{uid,jdbcType=BIGINT},</if><if test="name != null">#{name,jdbcType=VARCHAR},</if><if test="timeYm != null">#{timeYm,jdbcType=INTEGER},</if><if test="timeYmd != null">#{timeYmd,jdbcType=INTEGER},</if><if test="timeYmdh != null">#{timeYmdh,jdbcType=INTEGER},</if><if test="deptUniqueId != null">#{deptUniqueId,jdbcType=VARCHAR},</if><if test="deptName != null">#{deptName,jdbcType=VARCHAR},</if><if test="targetId != null">#{targetId,jdbcType=BIGINT},</if><if test="targetName != null">#{targetName,jdbcType=VARCHAR},</if><if test="type != null">#{type,jdbcType=INTEGER},</if><if test="imType != null">#{imType,jdbcType=INTEGER},</if><if test="startTime != null">#{startTime,jdbcType=TIMESTAMP},</if><if test="endTime != null">#{endTime,jdbcType=TIMESTAMP},</if><if test="endFlag != null">#{endFlag,jdbcType=INTEGER},</if><if test="session != null">#{session,jdbcType=VARCHAR},</if><if test="state != null">#{state,jdbcType=INTEGER},</if></trim>

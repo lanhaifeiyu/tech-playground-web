@@ -1,7 +1,7 @@
 package com.lhfeiyu.tech.handler;
 
-import com.zom.statistics.DTO.JwtParams;
-import com.zom.statistics.tools.JwtTokenUtil;
+import com.lhfeiyu.tech.DTO.JwtParams;
+import com.lhfeiyu.tech.tools.JwtTokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -9,6 +9,7 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.WebSocketHandlerDecorator;
 import org.springframework.web.socket.handler.WebSocketHandlerDecoratorFactory;
+import org.springframework.web.socket.WebSocketHandler;
 
 import java.security.Principal;
 
@@ -62,6 +63,7 @@ public class WebSocketDecoratorFactory implements WebSocketHandlerDecoratorFacto
             }
         };
     }
+
 }
 
 

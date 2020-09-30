@@ -108,7 +108,7 @@
 
 <cache alias="staUserCache">
     <key-type>java.lang.Long</key-type>
-    <value-type>com.zom.statistics.model.UserCache</value-type>
+    <value-type>com.lhfeiyu.tech.model.UserCache</value-type>
     <expiry>
         <ttl unit="minutes">30</ttl>
     </expiry>

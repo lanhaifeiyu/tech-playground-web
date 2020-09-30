@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zom.statistics.dao.mapper.logMapper.StaOriginalLogMapper">
+<mapper namespace="com.lhfeiyu.tech.dao.mapper.logMapper.StaOriginalLogMapper">
 
 	<!-- @author yuronghua-airson @template 2019.08.02 v11.0 @organization Zero One More, Inc. http://www.01more.com @time 2020-02-27 09:57:44 -->
 
@@ -34,7 +34,7 @@
 	<sql id="joinSearch"></sql>
 	<sql id="leftJoin"></sql>
 
-	<select id="selectListByLastPkId" resultType="com.zom.statistics.dao.po.StaOriginalLog" >
+	<select id="selectListByLastPkId" resultType="com.lhfeiyu.tech.dao.po.StaOriginalLog" >
 		SELECT id, content FROM sta_original_log WHERE id > #{lastPkId} LIMIT #{count}
 	</select>
 
@@ -45,11 +45,11 @@
 
 	<!-- old below -->
 
-	<select id="selectByStartId" resultType="com.zom.statistics.dao.po.StaOriginalLog" >
+	<select id="selectByStartId" resultType="com.lhfeiyu.tech.dao.po.StaOriginalLog" >
 		select id, content from sta_original_log where id > #{startId} limit 2000
 	</select>
 
-	<insert id="insertList" parameterType="com.zom.statistics.dao.po.StaOriginalLog">
+	<insert id="insertList" parameterType="com.lhfeiyu.tech.dao.po.StaOriginalLog">
 		insert into sta_original_log (`content`) values
 		<foreach collection="list" item="c" separator=",">
 			(#{c.content})
@@ -59,18 +59,18 @@
 
 
 	<!--====================================== 查询开始-SELECT_BEGIN ======================================-->
-	<select id="load" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaOriginalLog">
+	<select id="load" parameterType="java.lang.Long" resultType="com.lhfeiyu.tech.dao.po.StaOriginalLog">
 		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
 	</select>
-	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaOriginalLog">
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.lhfeiyu.tech.dao.po.StaOriginalLog">
 		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
 	</select>
 
-	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaOriginalLog">
+	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.tech.dao.po.StaOriginalLog">
     	SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> LIMIT 0,1
 	</select>
 
-	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaOriginalLog">
+	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.tech.dao.po.StaOriginalLog">
     	SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> <include refid="limitCount"/>
 	</select>
 
@@ -81,13 +81,13 @@
 
 	<!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
 	<!-- <-#-if cMap_has_next>,</-#-if> -->
-	<update id="updateByPrimaryKey" parameterType="com.zom.statistics.dao.po.StaOriginalLog">
+	<update id="updateByPrimaryKey" parameterType="com.lhfeiyu.tech.dao.po.StaOriginalLog">
 	    UPDATE <include refid="table"/>
 		<set>content = #{content,jdbcType=VARCHAR},</set>
 	    WHERE id = #{id,jdbcType=BIGINT}
 	</update>
 
-	<update id="updateByPrimaryKeySelective" parameterType="com.zom.statistics.dao.po.StaOriginalLog">
+	<update id="updateByPrimaryKeySelective" parameterType="com.lhfeiyu.tech.dao.po.StaOriginalLog">
 	    UPDATE <include refid="table"/>
 		<set><if test="content != null">content = #{content,jdbcType=VARCHAR},</if></set>
 	    WHERE id = #{id,jdbcType=BIGINT}
@@ -95,12 +95,12 @@
     <!--====================================== 修改结束-UPDATE_FINISH ======================================-->
 
 	<!--====================================== 新增开始-INSERT_BEGIN ======================================-->
-	<insert id="insert" parameterType="com.zom.statistics.dao.po.StaOriginalLog" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insert" parameterType="com.lhfeiyu.tech.dao.po.StaOriginalLog" useGeneratedKeys="true" keyProperty="id">
 	    INSERT INTO <include refid="table"/>(content)
 	    VALUES( #{content,jdbcType=VARCHAR})
 	</insert>
 
-	<insert id="insertSelective" parameterType="com.zom.statistics.dao.po.StaOriginalLog" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertSelective" parameterType="com.lhfeiyu.tech.dao.po.StaOriginalLog" useGeneratedKeys="true" keyProperty="id">
 	    INSERT INTO <include refid="table"/>
 		<trim prefix="(" suffix=")" suffixOverrides=","> <if test="content != null"> content,</if></trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=","><if test="content != null">#{content,jdbcType=VARCHAR},</if></trim>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zom.statistics.dao.mapper.logMapper.StaParsePositionMapper">
+<mapper namespace="com.lhfeiyu.tech.dao.mapper.logMapper.StaParsePositionMapper">
 
 	<!-- @author yuronghua-airson @template 2019.08.02 v11.0 @organization Zero One More, Inc. http://www.01more.com @time 2020-02-27 09:57:44 -->
 
@@ -38,7 +38,7 @@
 		SELECT last_pk_id FROM <include refid="table"/> WHERE `table_name` = #{tableName}
 	</select>
 
-	<select id="selectAll" resultType="com.zom.statistics.dao.po.StaParsePosition">
+	<select id="selectAll" resultType="com.lhfeiyu.tech.dao.po.StaParsePosition">
 		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A
 	</select>
 
@@ -49,7 +49,7 @@
 
 	<!-- old below -->
 
-	<select id="select" resultType="com.zom.statistics.dao.po.StaParsePosition" parameterType="com.zom.statistics.dao.po.StaParsePosition">
+	<select id="select" resultType="com.lhfeiyu.tech.dao.po.StaParsePosition" parameterType="com.lhfeiyu.tech.dao.po.StaParsePosition">
 		select id, `table_name`, last_pk_id, update_time from sta_parse_position
 		<where>
 			<if test="id != null and id != ''">
@@ -62,25 +62,25 @@
 		for update
 	</select>
 
-	<select id="selectByTableName" resultType="com.zom.statistics.dao.po.StaParsePosition">
+	<select id="selectByTableName" resultType="com.lhfeiyu.tech.dao.po.StaParsePosition">
 		SELECT id, `table_name`, last_pk_id, update_time FROM sta_parse_position WHERE `table_name` = #{tableName}
 	</select>
 	<!--=@@@@@@============================= 自定义内容 结束 _@CAUTION_SELF_FINISH@_ =============================@@@@@@=-->
 
 
 	<!--====================================== 查询开始-SELECT_BEGIN ======================================-->
-	<select id="load" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaParsePosition">
+	<select id="load" parameterType="java.lang.Long" resultType="com.lhfeiyu.tech.dao.po.StaParsePosition">
 		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
 	</select>
-	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaParsePosition">
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.lhfeiyu.tech.dao.po.StaParsePosition">
 		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
 	</select>
 
-	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaParsePosition">
+	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.tech.dao.po.StaParsePosition">
     	SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> LIMIT 0,1
 	</select>
 
-	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaParsePosition">
+	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.tech.dao.po.StaParsePosition">
     	SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> <include refid="limitCount"/>
 	</select>
 
@@ -91,13 +91,13 @@
 
 	<!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
 	<!-- <-#-if cMap_has_next>,</-#-if> -->
-	<update id="updateByPrimaryKey" parameterType="com.zom.statistics.dao.po.StaParsePosition">
+	<update id="updateByPrimaryKey" parameterType="com.lhfeiyu.tech.dao.po.StaParsePosition">
 	    UPDATE <include refid="table"/>
 		<set>table_name = #{tableName,jdbcType=VARCHAR},last_pk_id = #{lastPkId,jdbcType=BIGINT},update_time = #{updateTime,jdbcType=TIMESTAMP},</set>
 	    WHERE id = #{id,jdbcType=BIGINT}
 	</update>
 
-	<update id="updateByPrimaryKeySelective" parameterType="com.zom.statistics.dao.po.StaParsePosition">
+	<update id="updateByPrimaryKeySelective" parameterType="com.lhfeiyu.tech.dao.po.StaParsePosition">
 	    UPDATE <include refid="table"/>
 		<set>
 			<if test="tableName != null">table_name = #{tableName,jdbcType=VARCHAR},</if>
@@ -108,12 +108,12 @@
     <!--====================================== 修改结束-UPDATE_FINISH ======================================-->
 
 	<!--====================================== 新增开始-INSERT_BEGIN ======================================-->
-	<insert id="insert" parameterType="com.zom.statistics.dao.po.StaParsePosition" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insert" parameterType="com.lhfeiyu.tech.dao.po.StaParsePosition" useGeneratedKeys="true" keyProperty="id">
 	    INSERT INTO <include refid="table"/>(table_name,last_pk_id,update_time)
 	    VALUES( #{tableName,jdbcType=VARCHAR},#{lastPkId,jdbcType=BIGINT},#{updateTime,jdbcType=TIMESTAMP})
 	</insert>
 
-	<insert id="insertSelective" parameterType="com.zom.statistics.dao.po.StaParsePosition" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertSelective" parameterType="com.lhfeiyu.tech.dao.po.StaParsePosition" useGeneratedKeys="true" keyProperty="id">
 	    INSERT INTO <include refid="table"/>
 		<trim prefix="(" suffix=")" suffixOverrides=","> <if test="tableName != null"> table_name,</if><if test="lastPkId != null"> last_pk_id,</if><if test="updateTime != null"> update_time,</if></trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=","><if test="tableName != null">#{tableName,jdbcType=VARCHAR},</if><if test="lastPkId != null">#{lastPkId,jdbcType=BIGINT},</if><if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if></trim>

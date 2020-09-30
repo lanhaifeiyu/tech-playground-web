@@ -1,11 +1,11 @@
 package com.lhfeiyu.tech.advice;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zom.statistics.config.ResponseCode;
-import com.zom.statistics.exception.LogonException;
-import com.zom.statistics.exception.ParamErrorException;
-import com.zom.statistics.tools.Result;
-import com.zom.statistics.tools.ReturnCode;
+import com.lhfeiyu.tech.config.ResponseCode;
+import com.lhfeiyu.tech.exception.LogonException;
+import com.lhfeiyu.tech.exception.ParamErrorException;
+import com.lhfeiyu.tech.tools.Result;
+import com.lhfeiyu.tech.tools.ReturnCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

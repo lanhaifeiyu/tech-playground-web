@@ -1,7 +1,7 @@
 package com.lhfeiyu.tech.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zom.statistics.DTO.InterfaceDoc.DeptRequestParams;
+import com.lhfeiyu.tech.DTO.InterfaceDoc.DeptRequestParams;
 
 import java.util.Map;
 

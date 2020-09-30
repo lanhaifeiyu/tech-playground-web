@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zom.statistics.dao.mapper.logMapper.StaDayDeptMapper">
+<mapper namespace="com.lhfeiyu.tech.dao.mapper.logMapper.StaDayDeptMapper">
 
 	<!-- @author yuronghua-airson @template 2019.08.02 v11.0 @organization Zero One More, Inc. http://www.01more.com @time 2020-02-27 09:57:44 -->
 
@@ -78,11 +78,11 @@
 
 	<!-- old below -->
 
-	<select id="selectByUniqueIdAndTimeYmd" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectByUniqueIdAndTimeYmd" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select * from sta_day_dept where dept_unique_id = #{uniqueId} and time_ymd = #{date}
 	</select>
 
-	<select id="selectAllByCondition" resultType="com.zom.statistics.dao.po.StaDayDept" parameterType="map">
+	<select id="selectAllByCondition" resultType="com.lhfeiyu.tech.dao.po.StaDayDept" parameterType="map">
 		select dept_unique_id
 		<if test="flag == 1 or flag == 100">
 			, sum(online_duration) online_duration
@@ -497,7 +497,7 @@
 		) as temp
 	</select>
 
-	<select id="selectByTimeYmd" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectByTimeYmd" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select id, corpid, time_ymd, dept_unique_id, dept_name, online_duration, logon_time, talk_count, individual_talk_count, group_talk_count, talk_duration, individual_talk_duration, group_talk_duration,
 		video_all_count, video_call_count, video_upload_count, video_rollcall_count, video_conf_count, video_duration, sos_count, photo_upload_count, im_count, individual_im_count, group_im_count, onpost_duration,
 		mileage, tmp_group_count, tmp_group_file_count, state, update_time
@@ -509,7 +509,7 @@
 		</where>
 	</select>
 
-	<select id="selectAll" resultType="com.zom.statistics.dao.po.StaDayDept" parameterType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectAll" resultType="com.lhfeiyu.tech.dao.po.StaDayDept" parameterType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select id, corpid, time_ymd, dept_unique_id, dept_name, online_duration, logon_time, talk_count, individual_talk_count, group_talk_count, talk_duration, individual_talk_duration, group_talk_duration,
 		video_all_count, video_call_count, video_upload_count, video_rollcall_count, video_conf_count, video_duration, sos_count, photo_upload_count, im_count, individual_im_count, group_im_count, onpost_duration,
 		mileage, tmp_group_count, tmp_group_file_count, state, update_time
@@ -527,7 +527,7 @@
 		</where>
 	</select>
 
-	<select id="selectByUniqueIdAndTime" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectByUniqueIdAndTime" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select id, corpid, time_ymd, dept_unique_id, dept_name, online_duration, logon_time, talk_count, individual_talk_count, group_talk_count, talk_duration, individual_talk_duration, group_talk_duration,
 		video_all_count, video_call_count, video_upload_count, video_rollcall_count, video_conf_count, video_duration, sos_count, photo_upload_count, im_count, individual_im_count, group_im_count, onpost_duration,
 		mileage, tmp_group_count, tmp_group_file_count, state, update_time
@@ -538,7 +538,7 @@
 		</if>
 	</select>
 
-	<select id="selectByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectByUniqueIdAndDate" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select dept_unique_id, dept_name, sum(online_duration) online_duration, sum(talk_count) talk_count, sum(individual_talk_count) individual_talk_count, sum(group_talk_count) group_talk_count,
 		sum(talk_duration) talk_duration, sum(individual_talk_duration) individual_talk_duration, sum(group_talk_duration) group_talk_duration, sum(video_all_count) video_all_count,
 		sum(video_call_count) video_call_count, sum(video_upload_count) video_upload_count, sum(video_rollcall_count) video_rollcall_count, sum(video_conf_count) video_conf_count,
@@ -552,7 +552,7 @@
 		) as temp_1 group by dept_unique_id, dept_name
 	</select>
 
-	<select id="selectByDateAndUniqueId" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectByDateAndUniqueId" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select sum(online_duration) online_duration, sum(talk_count) talk_count, sum(individual_talk_count) individual_talk_count, sum(group_talk_count) group_talk_count,
 			   sum(talk_duration) talk_duration, sum(individual_talk_duration) individual_talk_duration, sum(group_talk_duration) group_talk_duration, sum(video_all_count) video_all_count,
 			   sum(video_call_count) video_call_count, sum(video_upload_count) video_upload_count, sum(video_rollcall_count) video_rollcall_count, sum(video_conf_count) video_conf_count,
@@ -563,7 +563,7 @@
 			 ) as temp_1
 	</select>
 
-	<select id="selectByUniqueIdInAndDates" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectByUniqueIdInAndDates" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select dept_unique_id, time_ymd, sum(online_duration) online_duration, sum(talk_count) talk_count, sum(individual_talk_count) individual_talk_count, sum(group_talk_count) group_talk_count,
 		sum(talk_duration) talk_duration, sum(individual_talk_duration) individual_talk_duration, sum(group_talk_duration) group_talk_duration, sum(video_all_count) video_all_count,
 		sum(video_call_count) video_call_count, sum(video_upload_count) video_upload_count, sum(video_rollcall_count) video_rollcall_count, sum(video_conf_count) video_conf_count,
@@ -587,7 +587,7 @@
 		group by dept_unique_id, time_ymd
 	</select>
 
-	<select id="selectAudioCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectAudioCountByUniqueIdAndDate" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select dept_unique_id, dept_name, sum(individual_talk_count) individual_talk_count, sum(group_talk_count) group_talk_count from sta_day_dept
 		<where>
 			<if test="uniqueIdIn != null and uniqueIdIn != ''">
@@ -600,7 +600,7 @@
 		group by dept_unique_id, dept_name
 	</select>
 
-	<select id="selectAudioDurationByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectAudioDurationByUniqueIdAndDate" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select dept_unique_id, dept_name, sum(individual_talk_duration) individual_talk_duration, sum(group_talk_duration) group_talk_duration from sta_day_dept
 		<where>
 			<if test="uniqueIdIn != null and uniqueIdIn != ''">
@@ -613,7 +613,7 @@
 		group by dept_unique_id, dept_name
 	</select>
 
-	<select id="selectVideoCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectVideoCountByUniqueIdAndDate" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select dept_unique_id, dept_name, sum(video_call_count) video_call_count, sum(video_upload_count) video_upload_count, sum(video_rollcall_count) video_rollcall_count, sum(video_conf_count) video_conf_count from sta_day_dept
 		<where>
 			<if test="uniqueIdIn != null and uniqueIdIn != ''">
@@ -626,7 +626,7 @@
 		group by dept_unique_id, dept_name
 	</select>
 
-	<select id="selectVideoDurationByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectVideoDurationByUniqueIdAndDate" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select dept_unique_id, dept_name, sum(video_duration) video_duration from sta_day_dept
 		<where>
 			<if test="uniqueIdIn != null and uniqueIdIn != ''">
@@ -639,7 +639,7 @@
 		group by dept_unique_id, dept_name
 	</select>
 
-	<select id="selectPhotoCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectPhotoCountByUniqueIdAndDate" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select dept_unique_id, dept_name, sum(photo_upload_count) photo_upload_count from sta_day_dept
 		<where>
 			<if test="uniqueIdIn != null and uniqueIdIn != ''">
@@ -652,7 +652,7 @@
 		group by dept_unique_id, dept_name
 	</select>
 
-	<select id="selectSosCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectSosCountByUniqueIdAndDate" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select dept_unique_id, dept_name, sum(sos_count) sos_count from sta_day_dept
 		<where>
 			<if test="uniqueIdIn != null and uniqueIdIn != ''">
@@ -665,7 +665,7 @@
 		group by dept_unique_id, dept_name
 	</select>
 
-	<select id="selectImCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectImCountByUniqueIdAndDate" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select dept_unique_id, dept_name, sum(individual_im_count) individual_im_count, sum(group_im_count) group_im_count from sta_day_dept
 		<where>
 			<if test="uniqueIdIn != null and uniqueIdIn != ''">
@@ -678,7 +678,7 @@
 		group by dept_unique_id, dept_name
 	</select>
 
-	<select id="selectOnlineDurationByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectOnlineDurationByUniqueIdAndDate" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select dept_unique_id, dept_name, sum(online_duration) online_duration from sta_day_dept
 		<where>
 			<if test="uniqueIdIn != null and uniqueIdIn != ''">
@@ -691,7 +691,7 @@
 		group by dept_unique_id, dept_name
 	</select>
 
-	<select id="selectOnpostDurationByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectOnpostDurationByUniqueIdAndDate" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select dept_unique_id, dept_name, sum(onpost_duration) onpost_duration from sta_day_dept
 		<where>
 			<if test="uniqueIdIn != null and uniqueIdIn != ''">
@@ -704,7 +704,7 @@
 		group by dept_unique_id, dept_name
 	</select>
 
-	<select id="selectMileageCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectMileageCountByUniqueIdAndDate" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select dept_unique_id, dept_name, sum(mileage) mileage from sta_day_dept
 		<where>
 			<if test="uniqueIdIn != null and uniqueIdIn != ''">
@@ -717,7 +717,7 @@
 		group by dept_unique_id, dept_name
 	</select>
 
-	<select id="selectLogonCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayDept" parameterType="map">
+	<select id="selectLogonCountByUniqueIdAndDate" resultType="com.lhfeiyu.tech.dao.po.StaDayDept" parameterType="map">
 		select dept_unique_id, sum(1) talk_count from sta_user_logon_record_origin
 		<where>
 			<if test="true">
@@ -755,7 +755,7 @@
 		<if test="start != null and count != null">limit ${start}, ${count}</if>
 	</select>
 
-	<select id="selectTmpGroupCountByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectTmpGroupCountByUniqueIdAndDate" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select dept_unique_id, dept_name, sum(tmp_group_count) tmp_group_count from sta_day_dept
 		<where>
 			<if test="uniqueIdIn != null and uniqueIdIn != ''">
@@ -768,7 +768,7 @@
 		group by dept_unique_id, dept_name
 	</select>
 
-	<select id="selectCurrentOnlineByUniqueIdAndDate" resultType="com.zom.statistics.dao.po.StaDayDept" >
+	<select id="selectCurrentOnlineByUniqueIdAndDate" resultType="com.lhfeiyu.tech.dao.po.StaDayDept" >
 		select dept_unique_id, dept_name, sum(1) talk_count from sta_user_online_record
 		<where>
 			<if test="uniqueIdIn != null and uniqueIdIn != ''">
@@ -802,7 +802,7 @@
 		</where>
 	</select>
 
-	<select id="selectByUniqueId" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectByUniqueId" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select id, corpid, time_ymd, dept_unique_id, dept_name, online_duration, logon_time, talk_count, individual_talk_count, group_talk_count, talk_duration, individual_talk_duration,
 		group_talk_duration, video_all_count, video_call_count, video_upload_count, video_rollcall_count, video_conf_count, video_duration, sos_count, photo_upload_count, im_count,
 		individual_im_count, group_im_count, onpost_duration, mileage, tmp_group_count, tmp_group_file_count, state, update_time from sta_day_dept
@@ -819,7 +819,7 @@
 		</where>
 	</select>
 
-	<select id="selectUseOfCount" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectUseOfCount" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		select dept_unique_id, sum(talk_count + video_all_count + sos_count + photo_upload_count + im_count + individual_im_count + group_im_count) talk_count
 		from sta_day_dept
 		<where>
@@ -843,18 +843,18 @@
 
 
 	<!--====================================== 查询开始-SELECT_BEGIN ======================================-->
-	<select id="load" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="load" parameterType="java.lang.Long" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
 	</select>
-	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
 	</select>
 
-	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> LIMIT 0,1
 	</select>
 
-	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaDayDept">
+	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> <include refid="limitCount"/>
 	</select>
 
@@ -865,13 +865,13 @@
 
 	<!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
 	<!-- <-#-if cMap_has_next>,</-#-if> -->
-	<update id="updateByPrimaryKey" parameterType="com.zom.statistics.dao.po.StaDayDept">
+	<update id="updateByPrimaryKey" parameterType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		UPDATE <include refid="table"/>
 		<set>unique_id = #{uniqueId,jdbcType=VARCHAR},corpid = #{corpid,jdbcType=INTEGER},time_ymd = #{timeYmd,jdbcType=INTEGER},dept_unique_id = #{deptUniqueId,jdbcType=VARCHAR},dept_name = #{deptName,jdbcType=VARCHAR},online_duration = #{onlineDuration,jdbcType=BIGINT},logon_time = #{logonTime,jdbcType=TIMESTAMP},talk_count = #{talkCount,jdbcType=INTEGER},individual_talk_count = #{individualTalkCount,jdbcType=INTEGER},group_talk_count = #{groupTalkCount,jdbcType=INTEGER},talk_duration = #{talkDuration,jdbcType=INTEGER},individual_talk_duration = #{individualTalkDuration,jdbcType=INTEGER},group_talk_duration = #{groupTalkDuration,jdbcType=INTEGER},video_all_count = #{videoAllCount,jdbcType=INTEGER},video_call_count = #{videoCallCount,jdbcType=INTEGER},video_upload_count = #{videoUploadCount,jdbcType=INTEGER},video_rollcall_count = #{videoRollcallCount,jdbcType=INTEGER},video_conf_count = #{videoConfCount,jdbcType=INTEGER},video_duration = #{videoDuration,jdbcType=INTEGER},sos_count = #{sosCount,jdbcType=INTEGER},photo_upload_count = #{photoUploadCount,jdbcType=INTEGER},im_count = #{imCount,jdbcType=INTEGER},individual_im_count = #{individualImCount,jdbcType=INTEGER},group_im_count = #{groupImCount,jdbcType=INTEGER},onpost_duration = #{onpostDuration,jdbcType=INTEGER},mileage = #{mileage,jdbcType=BIGINT},tmp_group_count = #{tmpGroupCount,jdbcType=INTEGER},tmp_group_file_count = #{tmpGroupFileCount,jdbcType=INTEGER},state = #{state,jdbcType=INTEGER},update_time = #{updateTime,jdbcType=TIMESTAMP},</set>
 		WHERE id = #{id,jdbcType=BIGINT}
 	</update>
 
-	<update id="updateByPrimaryKeySelective" parameterType="com.zom.statistics.dao.po.StaDayDept">
+	<update id="updateByPrimaryKeySelective" parameterType="com.lhfeiyu.tech.dao.po.StaDayDept">
 		UPDATE <include refid="table"/>
 		<set><if test="uniqueId != null">unique_id = #{uniqueId,jdbcType=VARCHAR},</if><if test="corpid != null">corpid = #{corpid,jdbcType=INTEGER},</if><if test="timeYmd != null">time_ymd = #{timeYmd,jdbcType=INTEGER},</if><if test="deptUniqueId != null">dept_unique_id = #{deptUniqueId,jdbcType=VARCHAR},</if><if test="deptName != null">dept_name = #{deptName,jdbcType=VARCHAR},</if><if test="onlineDuration != null">online_duration = #{onlineDuration,jdbcType=BIGINT},</if><if test="logonTime != null">logon_time = #{logonTime,jdbcType=TIMESTAMP},</if><if test="talkCount != null">talk_count = #{talkCount,jdbcType=INTEGER},</if><if test="individualTalkCount != null">individual_talk_count = #{individualTalkCount,jdbcType=INTEGER},</if><if test="groupTalkCount != null">group_talk_count = #{groupTalkCount,jdbcType=INTEGER},</if><if test="talkDuration != null">talk_duration = #{talkDuration,jdbcType=INTEGER},</if><if test="individualTalkDuration != null">individual_talk_duration = #{individualTalkDuration,jdbcType=INTEGER},</if><if test="groupTalkDuration != null">group_talk_duration = #{groupTalkDuration,jdbcType=INTEGER},</if><if test="videoAllCount != null">video_all_count = #{videoAllCount,jdbcType=INTEGER},</if><if test="videoCallCount != null">video_call_count = #{videoCallCount,jdbcType=INTEGER},</if><if test="videoUploadCount != null">video_upload_count = #{videoUploadCount,jdbcType=INTEGER},</if><if test="videoRollcallCount != null">video_rollcall_count = #{videoRollcallCount,jdbcType=INTEGER},</if><if test="videoConfCount != null">video_conf_count = #{videoConfCount,jdbcType=INTEGER},</if><if test="videoDuration != null">video_duration = #{videoDuration,jdbcType=INTEGER},</if><if test="sosCount != null">sos_count = #{sosCount,jdbcType=INTEGER},</if><if test="photoUploadCount != null">photo_upload_count = #{photoUploadCount,jdbcType=INTEGER},</if><if test="imCount != null">im_count = #{imCount,jdbcType=INTEGER},</if><if test="individualImCount != null">individual_im_count = #{individualImCount,jdbcType=INTEGER},</if><if test="groupImCount != null">group_im_count = #{groupImCount,jdbcType=INTEGER},</if><if test="onpostDuration != null">onpost_duration = #{onpostDuration,jdbcType=INTEGER},</if><if test="mileage != null">mileage = #{mileage,jdbcType=BIGINT},</if><if test="tmpGroupCount != null">tmp_group_count = #{tmpGroupCount,jdbcType=INTEGER},</if><if test="tmpGroupFileCount != null">tmp_group_file_count = #{tmpGroupFileCount,jdbcType=INTEGER},</if><if test="state != null">state = #{state,jdbcType=INTEGER},</if><if test="updateTime != null">update_time = #{updateTime,jdbcType=TIMESTAMP},</if></set>
 		WHERE id = #{id,jdbcType=BIGINT}
@@ -879,12 +879,12 @@
     <!--====================================== 修改结束-UPDATE_FINISH ======================================-->
 
 	<!--====================================== 新增开始-INSERT_BEGIN ======================================-->
-	<insert id="insert" parameterType="com.zom.statistics.dao.po.StaDayDept" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insert" parameterType="com.lhfeiyu.tech.dao.po.StaDayDept" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO <include refid="table"/>(unique_id,corpid,time_ymd,dept_unique_id,dept_name,online_duration,logon_time,talk_count,individual_talk_count,group_talk_count,talk_duration,individual_talk_duration,group_talk_duration,video_all_count,video_call_count,video_upload_count,video_rollcall_count,video_conf_count,video_duration,sos_count,photo_upload_count,im_count,individual_im_count,group_im_count,onpost_duration,mileage,tmp_group_count,tmp_group_file_count,state,update_time)
 		VALUES( #{uniqueId,jdbcType=VARCHAR},#{corpid,jdbcType=INTEGER},#{timeYmd,jdbcType=INTEGER},#{deptUniqueId,jdbcType=VARCHAR},#{deptName,jdbcType=VARCHAR},#{onlineDuration,jdbcType=BIGINT},#{logonTime,jdbcType=TIMESTAMP},#{talkCount,jdbcType=INTEGER},#{individualTalkCount,jdbcType=INTEGER},#{groupTalkCount,jdbcType=INTEGER},#{talkDuration,jdbcType=INTEGER},#{individualTalkDuration,jdbcType=INTEGER},#{groupTalkDuration,jdbcType=INTEGER},#{videoAllCount,jdbcType=INTEGER},#{videoCallCount,jdbcType=INTEGER},#{videoUploadCount,jdbcType=INTEGER},#{videoRollcallCount,jdbcType=INTEGER},#{videoConfCount,jdbcType=INTEGER},#{videoDuration,jdbcType=INTEGER},#{sosCount,jdbcType=INTEGER},#{photoUploadCount,jdbcType=INTEGER},#{imCount,jdbcType=INTEGER},#{individualImCount,jdbcType=INTEGER},#{groupImCount,jdbcType=INTEGER},#{onpostDuration,jdbcType=INTEGER},#{mileage,jdbcType=BIGINT},#{tmpGroupCount,jdbcType=INTEGER},#{tmpGroupFileCount,jdbcType=INTEGER},#{state,jdbcType=INTEGER},#{updateTime,jdbcType=TIMESTAMP})
 	</insert>
 
-	<insert id="insertSelective" parameterType="com.zom.statistics.dao.po.StaDayDept" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertSelective" parameterType="com.lhfeiyu.tech.dao.po.StaDayDept" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO <include refid="table"/>
 		<trim prefix="(" suffix=")" suffixOverrides=","> <if test="uniqueId != null"> unique_id,</if><if test="corpid != null"> corpid,</if><if test="timeYmd != null"> time_ymd,</if><if test="deptUniqueId != null"> dept_unique_id,</if><if test="deptName != null"> dept_name,</if><if test="onlineDuration != null"> online_duration,</if><if test="logonTime != null"> logon_time,</if><if test="talkCount != null"> talk_count,</if><if test="individualTalkCount != null"> individual_talk_count,</if><if test="groupTalkCount != null"> group_talk_count,</if><if test="talkDuration != null"> talk_duration,</if><if test="individualTalkDuration != null"> individual_talk_duration,</if><if test="groupTalkDuration != null"> group_talk_duration,</if><if test="videoAllCount != null"> video_all_count,</if><if test="videoCallCount != null"> video_call_count,</if><if test="videoUploadCount != null"> video_upload_count,</if><if test="videoRollcallCount != null"> video_rollcall_count,</if><if test="videoConfCount != null"> video_conf_count,</if><if test="videoDuration != null"> video_duration,</if><if test="sosCount != null"> sos_count,</if><if test="photoUploadCount != null"> photo_upload_count,</if><if test="imCount != null"> im_count,</if><if test="individualImCount != null"> individual_im_count,</if><if test="groupImCount != null"> group_im_count,</if><if test="onpostDuration != null"> onpost_duration,</if><if test="mileage != null"> mileage,</if><if test="tmpGroupCount != null"> tmp_group_count,</if><if test="tmpGroupFileCount != null"> tmp_group_file_count,</if><if test="state != null"> state,</if><if test="updateTime != null"> update_time,</if></trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=","><if test="uniqueId != null">#{uniqueId,jdbcType=VARCHAR},</if><if test="corpid != null">#{corpid,jdbcType=INTEGER},</if><if test="timeYmd != null">#{timeYmd,jdbcType=INTEGER},</if><if test="deptUniqueId != null">#{deptUniqueId,jdbcType=VARCHAR},</if><if test="deptName != null">#{deptName,jdbcType=VARCHAR},</if><if test="onlineDuration != null">#{onlineDuration,jdbcType=BIGINT},</if><if test="logonTime != null">#{logonTime,jdbcType=TIMESTAMP},</if><if test="talkCount != null">#{talkCount,jdbcType=INTEGER},</if><if test="individualTalkCount != null">#{individualTalkCount,jdbcType=INTEGER},</if><if test="groupTalkCount != null">#{groupTalkCount,jdbcType=INTEGER},</if><if test="talkDuration != null">#{talkDuration,jdbcType=INTEGER},</if><if test="individualTalkDuration != null">#{individualTalkDuration,jdbcType=INTEGER},</if><if test="groupTalkDuration != null">#{groupTalkDuration,jdbcType=INTEGER},</if><if test="videoAllCount != null">#{videoAllCount,jdbcType=INTEGER},</if><if test="videoCallCount != null">#{videoCallCount,jdbcType=INTEGER},</if><if test="videoUploadCount != null">#{videoUploadCount,jdbcType=INTEGER},</if><if test="videoRollcallCount != null">#{videoRollcallCount,jdbcType=INTEGER},</if><if test="videoConfCount != null">#{videoConfCount,jdbcType=INTEGER},</if><if test="videoDuration != null">#{videoDuration,jdbcType=INTEGER},</if><if test="sosCount != null">#{sosCount,jdbcType=INTEGER},</if><if test="photoUploadCount != null">#{photoUploadCount,jdbcType=INTEGER},</if><if test="imCount != null">#{imCount,jdbcType=INTEGER},</if><if test="individualImCount != null">#{individualImCount,jdbcType=INTEGER},</if><if test="groupImCount != null">#{groupImCount,jdbcType=INTEGER},</if><if test="onpostDuration != null">#{onpostDuration,jdbcType=INTEGER},</if><if test="mileage != null">#{mileage,jdbcType=BIGINT},</if><if test="tmpGroupCount != null">#{tmpGroupCount,jdbcType=INTEGER},</if><if test="tmpGroupFileCount != null">#{tmpGroupFileCount,jdbcType=INTEGER},</if><if test="state != null">#{state,jdbcType=INTEGER},</if><if test="updateTime != null">#{updateTime,jdbcType=TIMESTAMP},</if></trim>

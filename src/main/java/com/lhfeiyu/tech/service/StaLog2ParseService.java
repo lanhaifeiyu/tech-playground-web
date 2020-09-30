@@ -1,7 +1,7 @@
 package com.lhfeiyu.tech.service;
 
-import com.zom.statistics.dao.mapper.logMapper.*;
-import com.zom.statistics.dao.po.*;
+import com.lhfeiyu.tech.dao.mapper.logMapper.*;
+import com.lhfeiyu.tech.dao.po.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

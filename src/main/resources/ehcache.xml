@@ -31,7 +31,7 @@
     <ehcache:cache alias="staUserCache">
         <!-- Adds the key and value type configuration -->
         <ehcache:key-type>java.lang.Long</ehcache:key-type>
-        <ehcache:value-type>com.zom.statistics.model.UserCache</ehcache:value-type>
+        <ehcache:value-type>com.lhfeiyu.tech.model.UserCache</ehcache:value-type>
         <ehcache:expiry>
             <ehcache:tti unit="minutes">30</ehcache:tti>
         </ehcache:expiry>

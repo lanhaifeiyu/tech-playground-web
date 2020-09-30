@@ -1,8 +1,8 @@
 package com.lhfeiyu.tech.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zom.statistics.DTO.InterfaceDoc.UserAllDto;
-import com.zom.statistics.DTO.InterfaceDoc.UserRequestParams;
+import com.lhfeiyu.tech.DTO.InterfaceDoc.UserAllDto;
+import com.lhfeiyu.tech.DTO.InterfaceDoc.UserRequestParams;
 
 import java.util.Map;
 

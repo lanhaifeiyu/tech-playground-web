@@ -9,7 +9,7 @@ mybatis:
     configuration:
         map-underscore-to-camel-case: true
         log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-    type-aliases-package: com.zom.statistics.dao.po
+    type-aliases-package: com.lhfeiyu.tech.dao.po
     mapper-locations: classpath:mapper/*/*.xml		# mapper映射文件
 spring:
     application:
@@ -64,7 +64,7 @@ spring:
         host: localhost
         port: 6379
         password: 1qaz234WSXplmnht7890mjuiOLM
-        jedis:
+        lettuce:
             pool:
                 min-idle: 0
                 max-idle: 8

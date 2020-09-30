@@ -1,10 +1,10 @@
 package com.lhfeiyu.tech.handler;
 
-import com.zom.statistics.dao.po.*;
-import com.zom.statistics.domain.StaConst;
-import com.zom.statistics.model.SumCommon;
-import com.zom.statistics.model.SumLog;
-import com.zom.statistics.service.StaLog4SumService;
+import com.lhfeiyu.tech.dao.po.*;
+import com.lhfeiyu.tech.domain.StaConst;
+import com.lhfeiyu.tech.model.SumCommon;
+import com.lhfeiyu.tech.model.SumLog;
+import com.lhfeiyu.tech.service.StaLog4SumService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

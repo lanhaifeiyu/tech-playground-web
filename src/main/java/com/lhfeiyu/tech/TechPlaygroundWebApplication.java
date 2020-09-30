@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication //(exclude = {RedisAutoConfiguration.class}) // , RedisRepositoriesAutoConfiguration.class
-@MapperScan(value = {"com.zom.statistics.dao.mapper.common", "com.zom.statistics.dao.mapper.logMapper"})
-//@ServletComponentScan(basePackages = "com.zom.statistics.filter") // reg by config/WebConfig
+@MapperScan(value = {"com.lhfeiyu.tech.dao.mapper.common", "com.lhfeiyu.tech.dao.mapper.logMapper"})
+//@ServletComponentScan(basePackages = "com.lhfeiyu.tech.filter") // reg by config/WebConfig
 @EnableTransactionManagement
 @EnableScheduling
 @EnableCaching

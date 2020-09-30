@@ -1,9 +1,9 @@
 package com.lhfeiyu.tech.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zom.statistics.service.WebSocketService;
-import com.zom.statistics.tools.Result;
-import com.zom.statistics.vo.WebSocketResponse;
+import com.lhfeiyu.tech.service.WebSocketService;
+import com.lhfeiyu.tech.tools.Result;
+import com.lhfeiyu.tech.vo.WebSocketResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

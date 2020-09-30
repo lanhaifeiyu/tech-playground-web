@@ -5,6 +5,7 @@ import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
+import org.springframework.web.socket.WebSocketHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;

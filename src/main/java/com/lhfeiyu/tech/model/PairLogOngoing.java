@@ -1,9 +1,9 @@
 package com.lhfeiyu.tech.model;
 
-import com.zom.statistics.dao.po.StaUserAudioRecord;
-import com.zom.statistics.dao.po.StaUserOnlineRecord;
-import com.zom.statistics.dao.po.StaUserSosRecord;
-import com.zom.statistics.dao.po.StaUserVideoRecord;
+import com.lhfeiyu.tech.dao.po.StaUserAudioRecord;
+import com.lhfeiyu.tech.dao.po.StaUserOnlineRecord;
+import com.lhfeiyu.tech.dao.po.StaUserSosRecord;
+import com.lhfeiyu.tech.dao.po.StaUserVideoRecord;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

@@ -1,7 +1,7 @@
 package com.lhfeiyu.tech.config;
 
-import com.zom.statistics.handler.PrincipalHandshakeHandler;
-import com.zom.statistics.handler.WebSocketDecoratorFactory;
+import com.lhfeiyu.tech.handler.PrincipalHandshakeHandler;
+import com.lhfeiyu.tech.handler.WebSocketDecoratorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

@@ -1,7 +1,7 @@
 package com.lhfeiyu.tech.dao.mapper.logMapper;
 
-import com.zom.statistics.dao.mapper.common.BaseMapper;
-import com.zom.statistics.dao.po.StaUserMileageRecord;
+import com.lhfeiyu.tech.dao.mapper.common.BaseMapper;
+import com.lhfeiyu.tech.dao.po.StaUserMileageRecord;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

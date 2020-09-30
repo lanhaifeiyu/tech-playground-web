@@ -1,6 +1,6 @@
 package com.lhfeiyu.tech.model;
 
-import com.zom.statistics.dao.po.*;
+import com.lhfeiyu.tech.dao.po.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.slf4j.Logger;

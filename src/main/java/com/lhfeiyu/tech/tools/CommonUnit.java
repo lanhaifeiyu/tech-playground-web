@@ -1,7 +1,7 @@
 package com.lhfeiyu.tech.tools;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zom.statistics.DTO.InterfaceDoc.BaseReqDto;
+import com.lhfeiyu.tech.DTO.InterfaceDoc.BaseReqDto;
 
 import java.text.DateFormat;
 import java.text.ParseException;

@@ -1,8 +1,8 @@
 package com.lhfeiyu.tech.dao.mapper.common;
 
-import com.zom.statistics.DTO.User;
-import com.zom.statistics.DTO.UserSearchDto;
-import com.zom.statistics.model.UserCache;
+import com.lhfeiyu.tech.DTO.User;
+import com.lhfeiyu.tech.DTO.UserSearchDto;
+import com.lhfeiyu.tech.model.UserCache;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

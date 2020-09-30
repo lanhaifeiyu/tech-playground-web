@@ -1,8 +1,8 @@
 package com.lhfeiyu.tech.service.impl;
 
-import com.zom.statistics.DTO.RtvConsoleUser;
-import com.zom.statistics.dao.mapper.common.ConsoleUserMapper;
-import com.zom.statistics.service.IConsoleUserService;
+import com.lhfeiyu.tech.DTO.RtvConsoleUser;
+import com.lhfeiyu.tech.dao.mapper.common.ConsoleUserMapper;
+import com.lhfeiyu.tech.service.IConsoleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

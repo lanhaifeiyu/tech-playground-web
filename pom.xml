@@ -21,7 +21,7 @@
         <mysql-connector.version>8.0.21</mysql-connector.version>
         <fastjson.version>1.2.73</fastjson.version>
         <druid.version>1.1.24</druid.version>
-        <jedis.version>3.3.0</jedis.version>
+        <!--<jedis.version>3.3.0</jedis.version>-->
         <swagger.version>2.9.2</swagger.version>
         <commons-codec.version>1.13</commons-codec.version>
         <commons-text.version>1.9</commons-text.version>
@@ -44,20 +44,20 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-            <exclusions>
+            <!--<exclusions>
                 <exclusion>
                     <groupId>io.lettuce</groupId>
                     <artifactId>lettuce-core</artifactId>
                 </exclusion>
-            </exclusions>
+            </exclusions>-->
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
-        <dependency>
+        <!--<dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
             <version>${jedis.version}</version>
-        </dependency>
+        </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 -->
         <dependency>
@@ -145,11 +145,11 @@
             <version>1.2.9</version>
         </dependency>
 
-        <!--<dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate-validator.version}</version>
-        </dependency>-->
+        </dependency>
 
         <dependency>
             <groupId>org.ehcache</groupId>
@@ -184,12 +184,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-            <exclusions>
+            <!--<exclusions>
                 <exclusion>
                     <groupId>org.junit.vintage</groupId>
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
-            </exclusions>
+            </exclusions>-->
         </dependency>
 
     </dependencies>

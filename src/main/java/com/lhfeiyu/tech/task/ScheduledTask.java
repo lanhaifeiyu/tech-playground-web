@@ -1,9 +1,9 @@
 package com.lhfeiyu.tech.task;
 
-import com.zom.statistics.handler.StaLog1SourceHandler;
-import com.zom.statistics.handler.StaLog2ParseHandler;
-import com.zom.statistics.handler.StaLog4SumHandler;
-import com.zom.statistics.handler.StaTestHandler;
+import com.lhfeiyu.tech.handler.StaLog1SourceHandler;
+import com.lhfeiyu.tech.handler.StaLog2ParseHandler;
+import com.lhfeiyu.tech.handler.StaLog4SumHandler;
+import com.lhfeiyu.tech.handler.StaTestHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class ScheduledTask {
 
     private static Logger logger = LoggerFactory.getLogger(ScheduledTask.class);
 
-    @Scheduled(fixedRate = 1000 * 30)
+    /*@Scheduled(fixedRate = 1000 * 30)
     public void insertOriginalLog() {
         try {
             logger.debug("-- redis start --");
@@ -50,7 +50,7 @@ public class ScheduledTask {
         staLog2ParseHandler.parseOriginLog();
         staLog4SumHandler.doSumDomain();
         logger.debug("-- parse end --");
-    }
+    }*/
 
     // XXX FOR TEST
     /*@Scheduled(fixedRate = 1000 * 3600)
@@ -68,16 +68,5 @@ public class ScheduledTask {
      * 比如说：检查同一个用户是否有多个持续的业务在定时刷新，这种场景会造成大量的定时刷新，影响性能同时产生大量log
      *
      */
-
-
-    // old blow ----------------------------------------------
-
-    /*@Scheduled(fixedRate = 1000 * 60)
-    public void task1() {
-        //staLogService.parseLog4();
-    }
-
-    @Autowired
-    private IStaLogService staLogService;*/
 
 }

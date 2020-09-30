@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zom.statistics.dao.mapper.common.UserMapper">
+<mapper namespace="com.lhfeiyu.tech.dao.mapper.common.UserMapper">
     <!--====================================== 查询开始-SELECT_BEGIN ======================================-->
 
-    <select id="loadToCache" resultType="com.zom.statistics.model.UserCache">
+    <select id="loadToCache" resultType="com.lhfeiyu.tech.model.UserCache">
         SELECT A.id,A.corp_id AS corpid,A.display_name AS username,A.department_id AS deptUniqueId,B.short_name AS deptName,
                IF(C.id IS NULL,0,C.id) AS roleId,IF(C.role_type IS NULL,0,C.role_type) AS roleType
         FROM rtv_user A LEFT JOIN rtv_unit_table B on A.department_id = B.unique_id  LEFT JOIN rtv_user_role C on A.user_role_id = C.id WHERE A.id = #{id}
@@ -11,14 +11,14 @@
 
     <!-- old below -->
 
-    <select id="selectByIdIn" resultType="com.zom.statistics.DTO.User">
+    <select id="selectByIdIn" resultType="com.lhfeiyu.tech.DTO.User">
         select A.id, A.display_name, A.department_id, A.corp_id, A.role_id, B.name deptName, C.role_type
         from rtv_user A left join rtv_unit_table B on A.department_id = B.unique_id
         left join rtv_user_role C on A.user_role_id = C.id
         where A.id in (${ids})
     </select>
 
-    <select id="selectById" resultType="com.zom.statistics.DTO.User">
+    <select id="selectById" resultType="com.lhfeiyu.tech.DTO.User">
         select * from rtv_user where id = #{id}
     </select>
 
@@ -26,11 +26,11 @@
         select display_name from rtv_user where id = #{id}
     </select>
 
-    <select id="selectAllByIdIn" resultType="com.zom.statistics.DTO.User">
+    <select id="selectAllByIdIn" resultType="com.lhfeiyu.tech.DTO.User">
         select A.id, A.corp_id, A.display_name, A.department_id, B.name deptName  from rtv_user A left join rtv_unit_table B on A.department_id = B.unique_id where A.`status` != 2 and A.id in (${ids})
     </select>
 
-    <select id="selectByUniqueIdIn" resultType="com.zom.statistics.DTO.User">
+    <select id="selectByUniqueIdIn" resultType="com.lhfeiyu.tech.DTO.User">
         select id, display_name, department_id from rtv_user
         <where>
             <if test="uniqueIdIn != null and uniqueIdIn != ''">
@@ -45,7 +45,7 @@
         </where>
     </select>
 
-    <select id="select" parameterType="com.zom.statistics.DTO.UserSearchDto" resultType="com.zom.statistics.DTO.User">
+    <select id="select" parameterType="com.lhfeiyu.tech.DTO.UserSearchDto" resultType="com.lhfeiyu.tech.DTO.User">
         select id, display_name, department_id, corp_id from rtv_user
         <where>
             <if test="displayName != null and displayName != ''">

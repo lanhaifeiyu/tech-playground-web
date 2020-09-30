@@ -1,6 +1,6 @@
 package com.lhfeiyu.tech.service;
 
-import com.zom.statistics.DTO.RtvConsoleUser;
+import com.lhfeiyu.tech.DTO.RtvConsoleUser;
 
 public interface IConsoleUserService {
 

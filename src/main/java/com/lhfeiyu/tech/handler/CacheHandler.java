@@ -1,8 +1,8 @@
 package com.lhfeiyu.tech.handler;
 
 import com.alibaba.druid.util.StringUtils;
-import com.zom.statistics.model.UserCache;
-import com.zom.statistics.service.CacheService;
+import com.lhfeiyu.tech.model.UserCache;
+import com.lhfeiyu.tech.service.CacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zom.statistics.dao.mapper.common.ConsoleUserMapper">
+<mapper namespace="com.lhfeiyu.tech.dao.mapper.common.ConsoleUserMapper">
     <!--====================================== 查询开始-SELECT_BEGIN ======================================-->
 
     <!-- old below -->
 
-    <select id="selectById" resultType="com.zom.statistics.DTO.RtvConsoleUser">
+    <select id="selectById" resultType="com.lhfeiyu.tech.DTO.RtvConsoleUser">
         select id, user_name, password, salt, phone, corp_id, admin_id, display_name, department_id, department_fk_id, auth, ext_id from rtv_console_user
         where id = #{id}
     </select>
 
-    <select id="selectByNameAndPsw" resultType="com.zom.statistics.DTO.RtvConsoleUser">
+    <select id="selectByNameAndPsw" resultType="com.lhfeiyu.tech.DTO.RtvConsoleUser">
         select id, user_name, password, salt, phone, corp_id, admin_id, display_name, department_id, department_fk_id, auth, ext_id from rtv_console_user
         where user_name = #{name} and password = #{psw}
     </select>

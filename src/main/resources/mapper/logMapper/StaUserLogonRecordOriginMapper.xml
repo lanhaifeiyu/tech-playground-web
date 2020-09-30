@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zom.statistics.dao.mapper.logMapper.StaUserLogonRecordOriginMapper">
+<mapper namespace="com.lhfeiyu.tech.dao.mapper.logMapper.StaUserLogonRecordOriginMapper">
 
 	<!-- @author yuronghua-airson @template 2019.08.02 v11.0 @organization Zero One More, Inc. http://www.01more.com @time 2020-02-27 09:57:44 -->
 
@@ -37,15 +37,15 @@
 
 	<!-- old below -->
 
-	<select id="selectByStartId" resultType="com.zom.statistics.dao.po.StaUserLogonRecordOrigin">
+	<select id="selectByStartId" resultType="com.lhfeiyu.tech.dao.po.StaUserLogonRecordOrigin">
 		select id, corpid, uid, name, time_ym, time_ymd, time_ymdh, dept_unique_id, dept_name, `time`, bind_duty, flag, `session`, state, `real` from sta_user_logon_record_origin where id > #{startId}
 	</select>
 
-	<select id="selectLogonOutByLastId" resultType="com.zom.statistics.dao.po.StaUserLogonRecordOrigin">
+	<select id="selectLogonOutByLastId" resultType="com.lhfeiyu.tech.dao.po.StaUserLogonRecordOrigin">
 		select id, corpid, uid, name, time_ym, time_ymd, time_ymdh, dept_unique_id, dept_name, `time`, bind_duty, flag, `session`, state, `real` from sta_user_logon_record_origin where id > #{id} limit 5000
 	</select>
 
-	<select id="selectLogonByUids" resultType="com.zom.statistics.dao.po.StaUserLogonRecordOrigin">
+	<select id="selectLogonByUids" resultType="com.lhfeiyu.tech.dao.po.StaUserLogonRecordOrigin">
 		select uid, Max(`time`) `time` from sta_user_logon_record_origin where uid in (${uids}) and flag = 1 group by uid
 	</select>
 
@@ -59,18 +59,18 @@
 
 
 	<!--====================================== 查询开始-SELECT_BEGIN ======================================-->
-	<select id="load" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaUserLogonRecordOrigin">
+	<select id="load" parameterType="java.lang.Long" resultType="com.lhfeiyu.tech.dao.po.StaUserLogonRecordOrigin">
 		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
 	</select>
-	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.zom.statistics.dao.po.StaUserLogonRecordOrigin">
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.lhfeiyu.tech.dao.po.StaUserLogonRecordOrigin">
 		SELECT <include refid="baseColumns"/> FROM <include refid="table"/> A WHERE A.id = #{id,jdbcType=BIGINT}
 	</select>
 
-	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaUserLogonRecordOrigin">
+	<select id="selectByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.tech.dao.po.StaUserLogonRecordOrigin">
 		SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> LIMIT 0,1
 	</select>
 
-	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.zom.statistics.dao.po.StaUserLogonRecordOrigin">
+	<select id="selectListByCondition" parameterType="java.util.Map" resultType="com.lhfeiyu.tech.dao.po.StaUserLogonRecordOrigin">
 		SELECT <include refid="baseColumns"/> <include refid="joinColumns"/> FROM <include refid="table"/> A <include refid="leftJoin"/> <where> <include refid="baseSearch"/> <include refid="joinSearch"/> </where> <include refid="orderBy"/> <include refid="limitCount"/>
 	</select>
 
@@ -81,13 +81,13 @@
 
 	<!--====================================== 修改开始-UPDATE_BEGIN ======================================-->
 	<!-- <-#-if cMap_has_next>,</-#-if> -->
-	<update id="updateByPrimaryKey" parameterType="com.zom.statistics.dao.po.StaUserLogonRecordOrigin">
+	<update id="updateByPrimaryKey" parameterType="com.lhfeiyu.tech.dao.po.StaUserLogonRecordOrigin">
 		UPDATE <include refid="table"/>
 		<set>corpid = #{corpid,jdbcType=INTEGER},uid = #{uid,jdbcType=BIGINT},name = #{name,jdbcType=VARCHAR},time_ym = #{timeYm,jdbcType=INTEGER},time_ymd = #{timeYmd,jdbcType=INTEGER},time_ymdh = #{timeYmdh,jdbcType=INTEGER},dept_unique_id = #{deptUniqueId,jdbcType=VARCHAR},dept_name = #{deptName,jdbcType=VARCHAR},time = #{time,jdbcType=TIMESTAMP},bind_duty = #{bindDuty,jdbcType=INTEGER},session = #{session,jdbcType=VARCHAR},flag = #{flag,jdbcType=INTEGER},state = #{state,jdbcType=INTEGER},`real` = #{real,jdbcType=INTEGER},</set>
 		WHERE id = #{id,jdbcType=BIGINT}
 	</update>
 
-	<update id="updateByPrimaryKeySelective" parameterType="com.zom.statistics.dao.po.StaUserLogonRecordOrigin">
+	<update id="updateByPrimaryKeySelective" parameterType="com.lhfeiyu.tech.dao.po.StaUserLogonRecordOrigin">
 		UPDATE <include refid="table"/>
 		<set><if test="corpid != null">corpid = #{corpid,jdbcType=INTEGER},</if><if test="uid != null">uid = #{uid,jdbcType=BIGINT},</if><if test="name != null">name = #{name,jdbcType=VARCHAR},</if><if test="timeYm != null">time_ym = #{timeYm,jdbcType=INTEGER},</if><if test="timeYmd != null">time_ymd = #{timeYmd,jdbcType=INTEGER},</if><if test="timeYmdh != null">time_ymdh = #{timeYmdh,jdbcType=INTEGER},</if><if test="deptUniqueId != null">dept_unique_id = #{deptUniqueId,jdbcType=VARCHAR},</if><if test="deptName != null">dept_name = #{deptName,jdbcType=VARCHAR},</if><if test="time != null">time = #{time,jdbcType=TIMESTAMP},</if><if test="bindDuty != null">bind_duty = #{bindDuty,jdbcType=INTEGER},</if><if test="session != null">session = #{session,jdbcType=VARCHAR},</if><if test="flag != null">flag = #{flag,jdbcType=INTEGER},</if><if test="state != null">state = #{state,jdbcType=INTEGER},</if><if test="real != null">`real` = #{real,jdbcType=INTEGER},</if></set>
 		WHERE id = #{id,jdbcType=BIGINT}
@@ -95,12 +95,12 @@
 	<!--====================================== 修改结束-UPDATE_FINISH ======================================-->
 
 	<!--====================================== 新增开始-INSERT_BEGIN ======================================-->
-	<insert id="insert" parameterType="com.zom.statistics.dao.po.StaUserLogonRecordOrigin" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insert" parameterType="com.lhfeiyu.tech.dao.po.StaUserLogonRecordOrigin" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO <include refid="table"/>(corpid,uid,name,time_ym,time_ymd,time_ymdh,dept_unique_id,dept_name,time,bind_duty,session,flag,state,`real`)
 		VALUES( #{corpid,jdbcType=INTEGER},#{uid,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{timeYm,jdbcType=INTEGER},#{timeYmd,jdbcType=INTEGER},#{timeYmdh,jdbcType=INTEGER},#{deptUniqueId,jdbcType=VARCHAR},#{deptName,jdbcType=VARCHAR},#{time,jdbcType=TIMESTAMP},#{bindDuty,jdbcType=INTEGER},#{session,jdbcType=VARCHAR},#{flag,jdbcType=INTEGER},#{state,jdbcType=INTEGER},#{real,jdbcType=INTEGER})
 	</insert>
 
-	<insert id="insertSelective" parameterType="com.zom.statistics.dao.po.StaUserLogonRecordOrigin" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertSelective" parameterType="com.lhfeiyu.tech.dao.po.StaUserLogonRecordOrigin" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO <include refid="table"/>
 		<trim prefix="(" suffix=")" suffixOverrides=","> <if test="corpid != null"> corpid,</if><if test="uid != null"> uid,</if><if test="name != null"> name,</if><if test="timeYm != null"> time_ym,</if><if test="timeYmd != null"> time_ymd,</if><if test="timeYmdh != null"> time_ymdh,</if><if test="deptUniqueId != null"> dept_unique_id,</if><if test="deptName != null"> dept_name,</if><if test="time != null"> time,</if><if test="bindDuty != null"> bind_duty,</if><if test="session != null"> session,</if><if test="flag != null"> flag,</if><if test="state != null"> state,</if><if test="real != null"> `real`,</if></trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=","><if test="corpid != null">#{corpid,jdbcType=INTEGER},</if><if test="uid != null">#{uid,jdbcType=BIGINT},</if><if test="name != null">#{name,jdbcType=VARCHAR},</if><if test="timeYm != null">#{timeYm,jdbcType=INTEGER},</if><if test="timeYmd != null">#{timeYmd,jdbcType=INTEGER},</if><if test="timeYmdh != null">#{timeYmdh,jdbcType=INTEGER},</if><if test="deptUniqueId != null">#{deptUniqueId,jdbcType=VARCHAR},</if><if test="deptName != null">#{deptName,jdbcType=VARCHAR},</if><if test="time != null">#{time,jdbcType=TIMESTAMP},</if><if test="bindDuty != null">#{bindDuty,jdbcType=INTEGER},</if><if test="session != null">#{session,jdbcType=VARCHAR},</if><if test="flag != null">#{flag,jdbcType=INTEGER},</if><if test="state != null">#{state,jdbcType=INTEGER},</if><if test="real != null">#{real,jdbcType=INTEGER},</if></trim>

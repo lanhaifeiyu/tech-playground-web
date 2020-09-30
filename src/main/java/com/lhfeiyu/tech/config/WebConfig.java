@@ -1,6 +1,6 @@
 package com.lhfeiyu.tech.config;
 
-import com.zom.statistics.filter.CorsFilter;
+import com.lhfeiyu.tech.filter.CorsFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

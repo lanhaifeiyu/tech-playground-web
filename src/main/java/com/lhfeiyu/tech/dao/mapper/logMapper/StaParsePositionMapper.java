@@ -1,6 +1,6 @@
 package com.lhfeiyu.tech.dao.mapper.logMapper;
 
-import com.zom.statistics.dao.po.StaParsePosition;
+import com.lhfeiyu.tech.dao.po.StaParsePosition;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

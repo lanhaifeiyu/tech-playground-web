@@ -3,7 +3,7 @@ package com.lhfeiyu.tech.tools;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zom.statistics.config.ResponseCode;
+import com.lhfeiyu.tech.config.ResponseCode;
 import org.slf4j.Logger;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;

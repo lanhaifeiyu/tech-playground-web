@@ -1,8 +1,8 @@
 package com.lhfeiyu.tech.dao.mapper.logMapper;
 
-import com.zom.statistics.dao.mapper.common.BaseMapper;
-import com.zom.statistics.dao.po.StaDayCommon;
-import com.zom.statistics.dao.po.StaDayUser;
+import com.lhfeiyu.tech.dao.mapper.common.BaseMapper;
+import com.lhfeiyu.tech.dao.po.StaDayCommon;
+import com.lhfeiyu.tech.dao.po.StaDayUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

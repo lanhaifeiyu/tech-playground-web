@@ -1,6 +1,6 @@
 package com.lhfeiyu.tech.dao.mapper.common;
 
-import com.zom.statistics.DTO.RtvConsoleUser;
+import com.lhfeiyu.tech.DTO.RtvConsoleUser;
 import org.apache.ibatis.annotations.Param;
 
 public interface ConsoleUserMapper {

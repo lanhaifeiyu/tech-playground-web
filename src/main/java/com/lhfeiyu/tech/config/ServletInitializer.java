@@ -1,6 +1,6 @@
 package com.lhfeiyu.tech.config;
 
-import com.zom.statistics.ZomWwwStatisticsApplication;
+import com.lhfeiyu.tech.TechPlaygroundWebApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
@@ -16,7 +16,7 @@ public class ServletInitializer extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(ZomWwwStatisticsApplication.class);
+        return application.sources(TechPlaygroundWebApplication.class);
     }
 
 }

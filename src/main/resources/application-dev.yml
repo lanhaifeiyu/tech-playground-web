@@ -10,7 +10,7 @@ mybatis:
     configuration:
         map-underscore-to-camel-case: true
         log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
-    type-aliases-package: com.zom.statistics.dao.po
+    type-aliases-package: com.lhfeiyu.tech.dao.po
     mapper-locations: classpath:mapper/*/*.xml		# mapper映射文件
 spring:
     application:
@@ -19,8 +19,8 @@ spring:
         druid:
             name: zom-www-statistics
             url: jdbc:mysql://localhost/rtvitrunk?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
-            username: itrunk
-            password: "!VDDdd357!"
+            username: root
+            password: "vfr47ujm"
             driver-class-name: com.mysql.cj.jdbc.Driver
             filters: stat
             #最大并发连接数
@@ -65,7 +65,7 @@ spring:
         host: 172.81.216.81
         port: 6379
         password: vfr47ujm
-        jedis:
+        lettuce:
             pool:
                 min-idle: 0
                 max-idle: 8

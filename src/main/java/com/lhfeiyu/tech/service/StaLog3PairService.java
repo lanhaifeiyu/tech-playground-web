@@ -1,14 +1,14 @@
 package com.lhfeiyu.tech.service;
 
-import com.zom.statistics.dao.mapper.logMapper.*;
-import com.zom.statistics.dao.po.StaUserAudioRecord;
-import com.zom.statistics.dao.po.StaUserOnlineRecord;
-import com.zom.statistics.dao.po.StaUserSosRecord;
-import com.zom.statistics.dao.po.StaUserVideoRecord;
-import com.zom.statistics.domain.StaConst;
-import com.zom.statistics.model.LogonOffRecord;
-import com.zom.statistics.model.PairLog;
-import com.zom.statistics.model.PairLogOngoing;
+import com.lhfeiyu.tech.dao.mapper.logMapper.*;
+import com.lhfeiyu.tech.dao.po.StaUserAudioRecord;
+import com.lhfeiyu.tech.dao.po.StaUserOnlineRecord;
+import com.lhfeiyu.tech.dao.po.StaUserSosRecord;
+import com.lhfeiyu.tech.dao.po.StaUserVideoRecord;
+import com.lhfeiyu.tech.domain.StaConst;
+import com.lhfeiyu.tech.model.LogonOffRecord;
+import com.lhfeiyu.tech.model.PairLog;
+import com.lhfeiyu.tech.model.PairLogOngoing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

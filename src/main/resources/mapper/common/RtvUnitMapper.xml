@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zom.statistics.dao.mapper.common.RtvUnitMapper">
+<mapper namespace="com.lhfeiyu.tech.dao.mapper.common.RtvUnitMapper">
     <!--====================================== 查询开始-SELECT_BEGIN ======================================-->
 
     <!-- old below -->
 
-    <select id="selectByUniqueIn" resultType="com.zom.statistics.DTO.RtvUnit">
+    <select id="selectByUniqueIn" resultType="com.lhfeiyu.tech.DTO.RtvUnit">
         select * from rtv_unit_table where unique_id in (${uniqueIdIn})
     </select>
     <select id="selectCommonUniqueUp" resultType="string">
@@ -24,7 +24,7 @@
         select unique_id from rtv_unit_table where parent_id = #{parentId}
     </select>
 
-    <select id="selectNameByUniqueIn" resultType="com.zom.statistics.DTO.RtvUnit">
+    <select id="selectNameByUniqueIn" resultType="com.lhfeiyu.tech.DTO.RtvUnit">
         select name, unique_id from rtv_unit_table where unique_id in (${uniqueIdIn})
     </select>
 
@@ -32,7 +32,7 @@
         select unique_id from rtv_unit_table where corp_id = #{corpId} and `state` = 1
     </select>
 
-    <select id="selectLike" resultType="com.zom.statistics.DTO.RtvUnit" parameterType="com.zom.statistics.DTO.UnitSearchDto">
+    <select id="selectLike" resultType="com.lhfeiyu.tech.DTO.RtvUnit" parameterType="com.lhfeiyu.tech.DTO.UnitSearchDto">
         select id, `name`, short_name, unique_id, parent_id, state from rtv_unit_table
         <where>
             <if test="name != null and name != ''">
