@@ -19,8 +19,8 @@ import java.util.List;
 @RestController
 public class IndexController {
 
-    @Autowired
-    private IStaLogService staLogService;
+    /*@Autowired
+    private IStaLogService staLogService;*/
 
     @RequestMapping(value = {"", "/", "/index"})
     public JSONObject index() {
@@ -32,7 +32,7 @@ public class IndexController {
     @RequestMapping(value = "/parseLog", method = RequestMethod.GET)
     public String parseLog() {
         System.out.println("===========");
-        staLogService.parseLog();
+        //staLogService.parseLog();
         return "123";
     }
 
@@ -47,7 +47,8 @@ public class IndexController {
     public List<ContinueBusiness> ongoing (@RequestParam("type") int type,
                                            @RequestParam(value = "uid", required = false) Integer uid,
                                            @RequestParam(value = "uniqueId", required = false) String uniqueId) {
-        return staLogService.getOngoing(type, uid, uniqueId);
+        //return staLogService.getOngoing(type, uid, uniqueId);
+        return null;
     }
 
     /**
@@ -61,7 +62,8 @@ public class IndexController {
     public JSONObject interruputBusiness (@RequestParam("type") int type,
                                           @RequestParam(value = "flag", required = false) Integer flag,
                                           @RequestParam(value = "uid") Integer uid) {
-        return staLogService.interruputBusiness(type, flag, uid);
+        //return staLogService.interruputBusiness(type, flag, uid);
+        return null;
     }
 
 }
