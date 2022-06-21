@@ -18,7 +18,7 @@
         <skipTests>true</skipTests>
         <java.version>15</java.version>
         <mybatis.version>2.1.3</mybatis.version>
-        <mysql-connector.version>8.0.21</mysql-connector.version>
+        <mysql-connector.version>8.0.28</mysql-connector.version>
         <fastjson.version>1.2.73</fastjson.version>
         <druid.version>1.1.24</druid.version>
         <!--<jedis.version>3.3.0</jedis.version>-->
